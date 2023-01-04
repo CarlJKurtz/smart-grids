@@ -245,9 +245,11 @@ class Window(QWidget):
         self.corrected_bottom_margin_value.setText(str(round(corrected_bottom_margin(self), 3)))
         self.gutter_value.setText(str(round(gutter(self), 3)))
         self.lines_per_cell_value.setText(str(lines_in_cell(self)))
-        print(f"Top alignment: {self.top_alignment_value}")
-        print(f"Bottom alignment: {self.bottom_alignment_value}")
-        print()
+
+        if DEBUG:
+            print(f"Top alignment: {self.top_alignment_value}")
+            print(f"Bottom alignment: {self.bottom_alignment_value}")
+            print()
 
         self.update_canvas_size()
 
