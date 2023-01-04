@@ -1,5 +1,6 @@
 import font_functions
 import math
+from config import *
 
 
 def text_area_height(window) -> float:
@@ -74,23 +75,30 @@ def corrected_bottom_margin(window) -> float:
 
 
 def gutter(window) -> float:
-    gutter = window.leading_spinbox.value() + dif_capheight_leading(window)
+    gutter = window.leading_spinbox.value() * window.lines_in_gutter_spinbox.value() + dif_capheight_leading(window)
 
     return gutter
 
 
 def is_grid_valid(window, cells) -> bool:
-    if cells > 0 and ((math.floor(possible_lines(window)) - (cells - 1)) / cells).is_integer() and (math.floor(possible_lines(window)) - (cells - 1)) / cells > 0:
+    lines_per_cell = (math.floor(possible_lines(window)) - (cells - 1) * window.lines_in_gutter_spinbox.value()) / cells
+    if cells > 0 and lines_per_cell.is_integer() and lines_per_cell > 0:
         is_valid = True
+        if DEBUG:
+            print("Is Valid!")
+            print(lines_per_cell)
     else:
         is_valid = False
+        if DEBUG:
+            print("NOT Valid!")
+            print(lines_per_cell)
 
     return is_valid
 
 
 def lines_in_cell(window) -> int:
     if is_grid_valid(window, window.rows_spinbox.value()):
-        lines_in_cell = int((possible_lines(window) - (window.rows_spinbox.value() - 1)) / window.rows_spinbox.value())
+        lines_in_cell = int((possible_lines(window) - (window.rows_spinbox.value() - 1) * window.lines_in_gutter_spinbox.value()) / window.rows_spinbox.value())
         return lines_in_cell
 
     else:

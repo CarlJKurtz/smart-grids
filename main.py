@@ -113,6 +113,10 @@ class Window(QWidget):
         self.rows_spinbox = QSpinBox(maximum=100, value=ROWS)
         self.rows_spinbox.valueChanged.connect(self.update)
         grid_config.addRow(self.rows_label, self.rows_spinbox)
+        self.lines_in_gutter_label = QLabel("Lines in gutter:")
+        self.lines_in_gutter_spinbox = QSpinBox(maximum=100, minimum=1, value=LINES_IN_GUTTER)
+        self.lines_in_gutter_spinbox.valueChanged.connect(self.update)
+        grid_config.addRow(self.lines_in_gutter_label, self.lines_in_gutter_spinbox)
         self.columns_label = QLabel("Amount of columns:")
         self.columns_spinbox = QSpinBox(maximum=100, value=COLUMNS)
         self.columns_spinbox.valueChanged.connect(self.update)
@@ -159,9 +163,11 @@ class Window(QWidget):
             str(x_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())))
         output_layout.addRow(self.x_height_label, self.x_height_value)
 
+        """
         preview_button = QPushButton("Preview!")
         preview_button.clicked.connect(self.preview)
         output_layout.addWidget(preview_button)
+        """
 
         vertical_alignment_group = QGroupBox("Vertical alignment")
         right_column.addWidget(vertical_alignment_group, 1)
@@ -245,11 +251,6 @@ class Window(QWidget):
         self.corrected_bottom_margin_value.setText(str(round(corrected_bottom_margin(self), 3)))
         self.gutter_value.setText(str(round(gutter(self), 3)))
         self.lines_per_cell_value.setText(str(lines_in_cell(self)))
-
-        if DEBUG:
-            print(f"Top alignment: {self.top_alignment_value}")
-            print(f"Bottom alignment: {self.bottom_alignment_value}")
-            print()
 
         self.update_canvas_size()
 
