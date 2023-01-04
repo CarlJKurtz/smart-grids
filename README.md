@@ -1,3 +1,5 @@
+![app icon](smart_grids-icon.png)
+
 Smart Grids
 ===========
 Smart grids is an application that returns possible configurations for typography grids based on various inputs.
