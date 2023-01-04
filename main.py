@@ -264,6 +264,7 @@ class Window(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon('smart_grids-icon.png'))
     window = Window()
     window.show()
 
