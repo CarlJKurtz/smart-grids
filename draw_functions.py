@@ -82,8 +82,11 @@ class Page():
             for i in range(self.window.rows_spinbox.value() - 1):
                 y = y + self.window.leading_spinbox.value() * self.scale * lines_in_cell(self.window)
                 painter.drawLine(line_x, y, line_x2, y)
-                y = y + self.window.leading_spinbox.value() * self.scale + (dif_capheight_leading(self.window) * self.scale)
+                for j in range(self.window.lines_in_gutter_spinbox.value()):
+                    y = y + self.window.leading_spinbox.value() * self.scale
+                y = y + (dif_capheight_leading(self.window) * self.scale)
                 painter.drawLine(line_x, y, line_x2, y)
+                j = j+1
                 y = y - (dif_capheight_leading(self.window) * self.scale)
                 i = i+1
                 pass
