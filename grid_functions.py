@@ -81,19 +81,20 @@ def gutter(window) -> float:
 
 
 def is_grid_valid(window, cells) -> bool:
-    lines_per_cell = (math.floor(possible_lines(window)) - (cells - 1) * window.lines_in_gutter_spinbox.value()) / cells
-    if cells > 0 and lines_per_cell.is_integer() and lines_per_cell > 0:
-        is_valid = True
-        if DEBUG:
-            print("Is Valid!")
-            print(lines_per_cell)
-    else:
-        is_valid = False
-        if DEBUG:
-            print("NOT Valid!")
-            print(lines_per_cell)
+    if cells > 0:
+        lines_per_cell = (math.floor(possible_lines(window)) - (cells - 1) * window.lines_in_gutter_spinbox.value()) / cells
+        if lines_per_cell.is_integer() and lines_per_cell > 0:
+            is_valid = True
+            if DEBUG:
+                print("Is Valid!")
+                print(lines_per_cell)
+        else:
+            is_valid = False
+            if DEBUG:
+                print("NOT Valid!")
+                print(lines_per_cell)
 
-    return is_valid
+        return is_valid
 
 
 def lines_in_cell(window) -> int:
@@ -103,3 +104,11 @@ def lines_in_cell(window) -> int:
 
     else:
         return 0
+
+def possible_divisions(window) -> list:
+    list_of_possible_divisions = []
+    for i in range(100):
+        if is_grid_valid(window, i):
+            list_of_possible_divisions.append(i)
+
+    return list_of_possible_divisions

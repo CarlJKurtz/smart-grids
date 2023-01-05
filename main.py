@@ -1,8 +1,8 @@
 import sys
 from font_functions import *
 from config import *
-from grid_functions import *
 from draw_functions import *
+from grid_functions import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -147,7 +147,9 @@ class Window(QWidget):
         self.lines_per_cell_label = QLabel("Lines per cell:")
         self.lines_per_cell_value = QLabel(str(lines_in_cell(self)))
         output_layout.addRow(self.lines_per_cell_label, self.lines_per_cell_value)
-        output_layout.addRow(QLabel("Configurations:"), QLabel())
+        self.possible_divisions_label = QLabel("Possible divisions:")
+        self.possible_divisions_value = QLabel("None")
+        output_layout.addRow(self.possible_divisions_label, self.possible_divisions_value)
         self.corrected_bottom_margin_label = QLabel("Corrected bottom margin:")
         self.corrected_bottom_margin_value = QLabel(str(round(corrected_bottom_margin(self), 3)))
         output_layout.addRow(self.corrected_bottom_margin_label, self.corrected_bottom_margin_value)
@@ -241,12 +243,20 @@ class Window(QWidget):
 
         return column_gutter
 
+    def display_possible_divisions(self):
+        divisions = possible_divisions(self)
+        if len(divisions) > 0:
+            self.possible_divisions_value.setText(str(divisions))
+        
+        else:
+            self.possible_divisions_value.setText("None")
 
     def update(self):
         self.top_alignment_value = self.update_top_alignment_value()
         self.bottom_alignment_value = self.update_bottom_alignment_value()
         self.column_gutter = self.update_column_gutter_value()
         draw_page(self)
+        self.display_possible_divisions()
         self.text_area_height_value.setText(str(round(text_area_height(self), 3)))
         self.cap_height_value.setText(str(round(font_functions.cap_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value()), 3)))
         self.ascender_value.setText(

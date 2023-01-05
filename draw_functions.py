@@ -96,7 +96,7 @@ class Page():
             painter.setPen(QPen(CYAN, Qt.SolidPattern))
             x = self.x_pos + (self.window.left_margin_spinbox.value() * self.scale)
             y1 = self.y_pos + self.window.top_margin_spinbox.value() * self.scale
-            y2 = self.y_pos + (self.height - self.window.bottom_margin_spinbox.value()) * self.scale
+            y2 = self.y_pos + (self.height - corrected_bottom_margin(self.window)) * self.scale
             column_width = (text_area_width(self.window) - (self.window.columns_spinbox.value() - 1) * self.window.column_gutter) / self.window.columns_spinbox.value()
 
             for i in range(self.window.columns_spinbox.value() - 1):
