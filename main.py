@@ -55,7 +55,7 @@ class Window(QWidget):
         self.canvas_label.setPixmap(self.canvas)
 
         page_config_group = QGroupBox("Page Configuration")
-        left_column.addWidget(page_config_group)
+        left_column.addWidget(page_config_group, 2)
         page_config_group.setLayout(page_config)
 
         self.page_width_label = QLabel("Page width:")
@@ -84,7 +84,7 @@ class Window(QWidget):
         page_config.addRow(self.right_margin_label, self.right_margin_spinbox)
 
         type_config_group = QGroupBox("Type Configuration")
-        left_column.addWidget(type_config_group)
+        left_column.addWidget(type_config_group, 2)
         type_config_group.setLayout(type_config)
 
         self.font_label = QLabel("Font:")
@@ -166,7 +166,7 @@ class Window(QWidget):
         output_layout.addRow(self.x_height_label, self.x_height_value)
 
         vertical_alignment_group = QGroupBox("Vertical alignment")
-        right_column.addWidget(vertical_alignment_group, 1)
+        left_column.addWidget(vertical_alignment_group, 1)
         vertical_alignment_group.setLayout(vertical_alignment)
         self.top_alignment_group = QGroupBox("Upper alignment")
         self.top_alignment_group.setLayout(top_alignment_layout)
