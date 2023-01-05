@@ -101,10 +101,6 @@ class Window(QWidget):
         self.leading_spinbox = QDoubleSpinBox(maximum=100000, minimum=0.01, value=LEADING)
         self.leading_spinbox.valueChanged.connect(self.update)
         type_config.addRow(self.leading_label, self.leading_spinbox)
-        self.use_custom_capheight_label = QLabel("Use custom cap-height:")
-        self.use_custom_capheight_checkbox = QCheckBox()
-        self.use_custom_capheight_checkbox.stateChanged.connect(self.update)
-        type_config.addRow(self.use_custom_capheight_label, self.use_custom_capheight_checkbox)
 
         grid_config_group = QGroupBox("Grid Configuration")
         right_column.addWidget(grid_config_group, 2)
@@ -277,7 +273,6 @@ class Window(QWidget):
         msg.showMessage(message)
 
         msg.exec_()
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
