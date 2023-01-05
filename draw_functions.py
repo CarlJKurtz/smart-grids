@@ -70,14 +70,13 @@ class Page():
                 painter.drawLine(line_x, y_pos, line_x2, y_pos)
                 y_pos = y_pos + (self.window.leading_spinbox.value() * self.scale)
 
-    def draw_grid(self):
+    def draw_rows(self):
         if is_grid_valid(self.window, self.window.rows_spinbox.value()):
             painter = QPainter(self.window.canvas)
             painter.setPen(QPen(CYAN, Qt.SolidPattern))
             line_x = self.x_pos + (self.window.left_margin_spinbox.value() * self.scale)
             line_x2 = line_x + (text_area_width(self.window) * self.scale)
-            y_start = self.y_pos + (self.window.top_margin_spinbox.value() * self.scale) - (dif_capheight_leading(self.window) * self.scale)
-            y = y_start
+            y = self.y_pos + (self.window.top_margin_spinbox.value() * self.scale) - (dif_capheight_leading(self.window) * self.scale)
 
             for i in range(self.window.rows_spinbox.value() - 1):
                 y = y + self.window.leading_spinbox.value() * self.scale * lines_in_cell(self.window)
@@ -89,8 +88,22 @@ class Page():
                 j = j+1
                 y = y - (dif_capheight_leading(self.window) * self.scale)
                 i = i+1
-                pass
 
+
+    def draw_columns(self):
+        if (self.window.columns_spinbox.value() - 1) * self.window.column_gutter < text_area_width(self.window) and self.window.columns_spinbox.value() > 0:
+            painter = QPainter(self.window.canvas)
+            painter.setPen(QPen(CYAN, Qt.SolidPattern))
+            x = self.x_pos + (self.window.left_margin_spinbox.value() * self.scale)
+            y1 = self.y_pos + self.window.top_margin_spinbox.value() * self.scale
+            y2 = self.y_pos + (self.height - self.window.bottom_margin_spinbox.value()) * self.scale
+            column_width = (text_area_width(self.window) - (self.window.columns_spinbox.value() - 1) * self.window.column_gutter) / self.window.columns_spinbox.value()
+
+            for i in range(self.window.columns_spinbox.value() - 1):
+                x = x + column_width * self.scale
+                painter.drawLine(x, y1, x, y2)
+                x = x + self.window.column_gutter * self.scale
+                painter.drawLine(x, y1, x, y2)
 
 
 def refresh_canvas(window):
@@ -102,5 +115,6 @@ def draw_page(window):
     page = Page(window)
     page.draw()
     page.draw_baseline_grid()
-    page.draw_grid()
+    page.draw_rows()
+    page.draw_columns()
     page.draw_text_area()

@@ -18,6 +18,7 @@ class Window(QWidget):
         self.resized.connect(self.update)
         self.top_alignment_value = self.update_top_alignment_value()
         self.bottom_alignment_value = self.update_bottom_alignment_value()
+        self.column_gutter = self.update_column_gutter_value()
 
     def resizeEvent(self, event):
         self.resized.emit()
@@ -121,12 +122,13 @@ class Window(QWidget):
         self.columns_spinbox = QSpinBox(maximum=100, value=COLUMNS)
         self.columns_spinbox.valueChanged.connect(self.update)
         grid_config.addRow(self.columns_label, self.columns_spinbox)
-        self.use_custom_gutter_label = QLabel("Use custom gutter:")
+        self.use_custom_gutter_label = QLabel("Custom column gutter:")
         self.use_custom_gutter_checkbox = QCheckBox()
         self.use_custom_gutter_checkbox.stateChanged.connect(self.update)
         grid_config.addRow(self.use_custom_gutter_label, self.use_custom_gutter_checkbox)
         self.custom_gutter_label = QLabel("Column gutter:")
         self.custom_gutter_spinbox = QDoubleSpinBox(maximum=100000, value=GUTTER)
+        self.custom_gutter_spinbox.valueChanged.connect(self.update)
         grid_config.addRow(self.custom_gutter_label, self.custom_gutter_spinbox)
         self.show_baseline_grid_label = QLabel("Show baseline-grid:")
         self.show_baseline_grid_checkbox = QCheckBox()
@@ -162,12 +164,6 @@ class Window(QWidget):
         self.x_height_value = QLabel(
             str(x_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())))
         output_layout.addRow(self.x_height_label, self.x_height_value)
-
-        """
-        preview_button = QPushButton("Preview!")
-        preview_button.clicked.connect(self.preview)
-        output_layout.addWidget(preview_button)
-        """
 
         vertical_alignment_group = QGroupBox("Vertical alignment")
         right_column.addWidget(vertical_alignment_group, 1)
@@ -236,10 +232,21 @@ class Window(QWidget):
 
         return bottom_alignment_value
 
+    def update_column_gutter_value(self):
+        if self.use_custom_gutter_checkbox.isChecked():
+            column_gutter = self.custom_gutter_spinbox.value()
+
+        else:
+            column_gutter = gutter(self)
+
+        return column_gutter
+
+
     def update(self):
-        draw_page(self)
         self.top_alignment_value = self.update_top_alignment_value()
         self.bottom_alignment_value = self.update_bottom_alignment_value()
+        self.column_gutter = self.update_column_gutter_value()
+        draw_page(self)
         self.text_area_height_value.setText(str(round(text_area_height(self), 3)))
         self.cap_height_value.setText(str(round(font_functions.cap_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value()), 3)))
         self.ascender_value.setText(

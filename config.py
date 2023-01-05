@@ -23,4 +23,4 @@ CAP_HEIGHT      = 1.5
 ROWS            = 9
 LINES_IN_GUTTER = 1
 COLUMNS         = 3
-GUTTER          = 100
+GUTTER          = 50
