@@ -43,20 +43,37 @@ def font_dict() -> OrderedDict:
     installed_fonts = {}
     home_path = str(Path.home())
     adobe_fonts_path = os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r")
-    system_fonts_path = os.path.join(home_path, "Library/Fonts")
+    user_fonts_path = os.path.join(home_path, "Library/Fonts")
     adobe_test_font_path = os.path.join("/Library/Application Support/Adobe/Fonts")
+    system_fonts_path = "/System/Library/Fonts"
 
     list_of_adobe_fonts = os.listdir(adobe_fonts_path)
-    list_of_system_fonts = os.listdir(system_fonts_path)
+    list_of_user_fonts = os.listdir(user_fonts_path)
     list_of_adobe_test_fonts = os.listdir(adobe_test_font_path)
+    list_of_system_fonts = os.listdir(system_fonts_path)
+
+    for font in list_of_user_fonts:
+        try:
+            installed_fonts.update(
+                {short_name(os.path.join(user_fonts_path, font)): os.path.join(user_fonts_path, font)})
+
+        except:
+            pass
 
     for font in list_of_system_fonts:
         try:
             installed_fonts.update(
                 {short_name(os.path.join(system_fonts_path, font)): os.path.join(system_fonts_path, font)})
+            print(f"Added {short_name(os.path.join(system_fonts_path, font))} from {os.path.join(system_fonts_path, font)}")
 
         except:
-            pass
+            try:
+                installed_fonts.update({font[:-4]: os.path.join(system_fonts_path, font)})
+
+            except:
+                pass
+
+
 
     for font in list_of_adobe_fonts:
         try:
