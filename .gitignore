@@ -3,4 +3,5 @@
 /build/
 /dist/
 main.spec
+SmartGrids.spec
 /build.py
