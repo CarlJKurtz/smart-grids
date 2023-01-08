@@ -3,6 +3,16 @@ from fontTools import ttLib
 from pathlib import Path
 from PIL import ImageFont
 from collections import OrderedDict
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 
 def cap_height(font_path: str, font_size: float) -> float:
@@ -64,14 +74,14 @@ def font_dict() -> OrderedDict:
         try:
             installed_fonts.update(
                 {short_name(os.path.join(system_fonts_path, font)): os.path.join(system_fonts_path, font)})
-            print(f"Added {short_name(os.path.join(system_fonts_path, font))} from {os.path.join(system_fonts_path, font)}")
 
         except:
             try:
                 installed_fonts.update({font[:-4]: os.path.join(system_fonts_path, font)})
 
             except:
-                pass
+                print(f"{bcolors.FAIL}[!]{bcolors.ENDC} failed to add {os.path.join(system_fonts_path, font)}")
+
 
 
 

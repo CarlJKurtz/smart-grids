@@ -27,7 +27,7 @@ class Window(QWidget):
 
     def init_ui(self):
         self.setWindowTitle(f"{APP_TITLE} | {APP_VERSION}")
-        self.setGeometry(100, 100, 1000, 900)
+        self.setGeometry(100, 100, 1000, 400)
         main_layout = QHBoxLayout()
         left_column = QVBoxLayout()
         self.center_column = QVBoxLayout()
@@ -60,11 +60,6 @@ class Window(QWidget):
         page_config_group.setLayout(page_config)
 
         self.page_width_label = QLabel("Page width:")
-        """
-        self.page_width_spinbox = QDoubleSpinBox(maximum=100000, value=PAGE_WIDTH)
-        self.page_width_spinbox.valueChanged.connect(self.update)
-        page_config.addRow(self.page_width_label, self.page_width_spinbox)
-        """
 
         self.page_width_spinbox = QDoubleSpinBox(maximum=100000, value=PAGE_WIDTH)
         self.page_width_spinbox.valueChanged.connect(self.update)
@@ -292,7 +287,7 @@ class Window(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon('smart_grids-icon.png'))
+    app.setWindowIcon(QIcon('assets/smart_grids-icon.png'))
     window = Window()
     window.show()
 
