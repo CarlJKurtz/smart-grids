@@ -22,4 +22,4 @@ All packages may be installed via ```pip``` in the console.
 - [PyQt5](https://pypi.org/project/PyQt5/)
 
 ### Copyright
-Copyright (c) 2023 Carl J. Kurtz. (See License file for more information)
+Copyright (c) 2023, Carl J. Kurtz. (See [LICENSE](LICENSE) for more information)
