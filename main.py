@@ -6,6 +6,7 @@ from grid_functions import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from UnitSpinBox import *
 
 
 class Window(QWidget):
@@ -16,8 +17,8 @@ class Window(QWidget):
         self.font_dict = font_dict()
         self.init_ui()
         self.resized.connect(self.update)
-        self.top_alignment_value = self.update_top_alignment_value()
         self.bottom_alignment_value = self.update_bottom_alignment_value()
+        self.top_alignment_value = self.update_top_alignment_value()
         self.column_gutter = self.update_column_gutter_value()
 
     def resizeEvent(self, event):
@@ -59,9 +60,16 @@ class Window(QWidget):
         page_config_group.setLayout(page_config)
 
         self.page_width_label = QLabel("Page width:")
+        """
         self.page_width_spinbox = QDoubleSpinBox(maximum=100000, value=PAGE_WIDTH)
         self.page_width_spinbox.valueChanged.connect(self.update)
         page_config.addRow(self.page_width_label, self.page_width_spinbox)
+        """
+
+        self.page_width_spinbox = QDoubleSpinBox(maximum=100000, value=PAGE_WIDTH)
+        self.page_width_spinbox.valueChanged.connect(self.update)
+        page_config.addRow(self.page_width_label, self.page_width_spinbox)
+
         self.page_height_label = QLabel("Page height:")
         self.page_height_spinbox = QDoubleSpinBox(maximum=100000, value=PAGE_HEIGHT)
         self.page_height_spinbox.valueChanged.connect(self.update)
@@ -134,6 +142,8 @@ class Window(QWidget):
         self.grid_start_position_label = QLabel("Grid start position:")
         self.grid_start_position_value = QLabel(str(grid_start_position(self)))
         output_layout.addRow(self.grid_start_position_label, self.grid_start_position_value)
+        self.baseline_shift_value = QLabel("0")
+        output_layout.addRow("Baseline shift:", self.baseline_shift_value)
         self.possible_lines_label = QLabel("Possible lines:")
         self.possible_lines_value = QLabel(str(possible_lines(self)))
         output_layout.addRow(self.possible_lines_label, self.possible_lines_value)
@@ -162,6 +172,9 @@ class Window(QWidget):
         self.x_height_value = QLabel(
             str(x_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())))
         output_layout.addRow(self.x_height_label, self.x_height_value)
+        self.descender_value = QLabel(str(round(font_functions.descender(self.font_dict.get(self.font_dropdown.currentText()),
+                                                            self.font_size_spinbox.value()), 3)))
+        output_layout.addRow("Descender:", self.descender_value)
 
         vertical_alignment_group = QGroupBox("Vertical alignment")
         left_column.addWidget(vertical_alignment_group, 1)
@@ -248,8 +261,8 @@ class Window(QWidget):
             self.possible_divisions_value.setText("None")
 
     def update(self):
-        self.top_alignment_value = self.update_top_alignment_value()
         self.bottom_alignment_value = self.update_bottom_alignment_value()
+        self.top_alignment_value = self.update_top_alignment_value()
         self.column_gutter = self.update_column_gutter_value()
         draw_page(self)
         self.display_possible_divisions()
@@ -264,6 +277,9 @@ class Window(QWidget):
         self.corrected_bottom_margin_value.setText(str(round(corrected_bottom_margin(self), 3)))
         self.gutter_value.setText(str(round(gutter(self), 3)))
         self.lines_per_cell_value.setText(str(lines_in_cell(self)))
+        self.descender_value.setText(str(round(font_functions.descender(self.font_dict.get(self.font_dropdown.currentText()),
+                                                            self.font_size_spinbox.value()), 3)))
+        self.baseline_shift_value.setText(str(round(self.bottom_alignment_value, 3)))
 
         self.update_canvas_size()
 

@@ -28,7 +28,7 @@ def cap_height_of_selected(window) -> float:
 
 def grid_start_position(window) -> float:
     try:
-        grid_start_position = window.top_margin_spinbox.value() - (window.leading_spinbox.value() - window.top_alignment_value)
+        grid_start_position = window.top_margin_spinbox.value() - (window.leading_spinbox.value() - window.top_alignment_value) + window.bottom_alignment_value
         return grid_start_position
     except:
         grid_start_position = window.top_margin_spinbox.value() - (
@@ -62,7 +62,11 @@ def dif_capheight_leading(window) -> float:
 
 
 def corrected_text_area_height(window) -> float:
-    new_text_area_height = window.leading_spinbox.value() * math.floor(possible_lines(window)) - dif_capheight_leading(window)
+    try:
+        new_text_area_height = window.leading_spinbox.value() * math.floor(possible_lines(window)) - dif_capheight_leading(window) + window.bottom_alignment_value
+    except:
+        new_text_area_height = window.leading_spinbox.value() * math.floor(
+            possible_lines(window)) - dif_capheight_leading(window)
 
     return new_text_area_height
 
@@ -75,7 +79,11 @@ def corrected_bottom_margin(window) -> float:
 
 
 def gutter(window) -> float:
-    gutter = window.leading_spinbox.value() * window.lines_in_gutter_spinbox.value() + dif_capheight_leading(window)
+    try:
+        gutter = window.leading_spinbox.value() * window.lines_in_gutter_spinbox.value() + dif_capheight_leading(window) - window.bottom_alignment_value
+    except:
+        gutter = window.leading_spinbox.value() * window.lines_in_gutter_spinbox.value() + dif_capheight_leading(
+            window)
 
     return gutter
 
