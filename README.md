@@ -15,6 +15,9 @@ The grids follow the style proposed by Josef Müller-Brockamann in his influenti
 
 Because of its type-first approach the application might enlarge the ```bottom margin``` to fit a whole number of lines into the text area. (After all we can't work with half a line of text, can we?) This means, that you have to use the new ```bottom margin``` suggested by the application in your layout software. This change will never be greater than the ```line height```.
 
+## What units should I use?
+SmartGrids does not currently support automatic unit conversion as we know it from our Adobe programs. This means, that all values must be put in as point values. This includes the dimensions and margins of the page. Luckily for us, in Adobe InDesign ```1 pt. == 1 px.```. This means that when you're setting up a grid for a digital setting in Adobe InDesign you can use pixels and points interchangeably. When you're using inches or millimeters you will need to do some conversion.
+
 ### Required packages
 All packages may be installed via ```pip``` in the console.
 
