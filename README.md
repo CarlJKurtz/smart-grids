@@ -11,8 +11,9 @@ Unlike the built-in grid creation tools in Adobe InDesign, the grids will automa
 
 Creating Cap-Height aligned grids in Adobe Indesign is not impossible, but involves a lot of trial and error. The applications allow you to skip the tedious guesswork and manual calculations. SmartGrids will show you all possible grid configurations and output all relevant values which you can then input into your layout software.
 
-The grids follow the style proposed by Josef Müller-Brockamann in his influential 1981 book [Grid Systems in Graphic Design](https://books.google.de/books/about/Grid_Systems_in_Graphic_Design_a_Visual.html?id=YOgtwAEACAAJ&redir_esc=y). Typographic grids help you structure your layouts in a meaningful and clean way. When working on larger editorial projects they can speed up your workflow significantly. 
+The grids follow the style proposed by Josef Müller-Brockamann in his influential 1981 book [Grid Systems in Graphic Design](https://books.google.de/books/about/Grid_Systems_in_Graphic_Design_a_Visual.html?id=YOgtwAEACAAJ&redir_esc=y). Typographic grids help you structure your layouts in a meaningful and clean way. When working on larger editorial projects they can speed up your workflow significantly.
 
+Because of its type-first approach the application might enlarge the ```bottom margin``` to fit a whole number of lines into the text area. (After all we can't work with half a line of text, can we?) This means, that you have to use the new ```bottom margin``` suggested by the application in your layout software. This change will never be greater than the ```line height```.
 
 ### Required packages
 All packages may be installed via ```pip``` in the console.
