@@ -6,7 +6,7 @@ DEBUG           = False
 CANVAS_WIDTH    = 10
 CANVAS_HEIGHT   = 10
 
-CANVAS_PADDING = 10
+CANVAS_PADDING  = 10
 
 # Default values
 PAGE_WIDTH      = 1920.0
