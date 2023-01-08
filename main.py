@@ -104,7 +104,7 @@ class Window(QWidget):
         right_column.addWidget(grid_config_group, 2)
         grid_config_group.setLayout(grid_config)
 
-        self.rows_spinbox = QSpinBox(maximum=100, value=ROWS)
+        self.rows_spinbox = QSpinBox(minimum=1, maximum=100, value=ROWS)
         self.rows_spinbox.valueChanged.connect(self.update)
         grid_config.addRow("Amount of rows:", self.rows_spinbox)
 
@@ -150,7 +150,7 @@ class Window(QWidget):
         output_layout.addRow("Corrected bottom margin:", self.corrected_bottom_margin_value)
 
         self.text_area_height_value = QLabel(str(text_area_height(self)))
-        output_layout.addRow("Textarea height:", self.text_area_height_value)
+        output_layout.addRow("Text area height:", self.text_area_height_value)
 
         self.ascender_value = QLabel(str(ascender(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())))
         output_layout.addRow("Ascender:", self.ascender_value)
@@ -242,9 +242,10 @@ class Window(QWidget):
         return column_gutter
 
     def display_possible_divisions(self):
-        divisions = possible_divisions(self)
+        divisions = str(possible_divisions(self))[1:-1]
+        divisions = divisions.replace(",", ", ")
         if len(divisions) > 0:
-            self.possible_divisions_value.setText(str(divisions))
+            self.possible_divisions_value.setText(divisions)
         
         else:
             self.possible_divisions_value.setText("None")

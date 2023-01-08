@@ -117,6 +117,7 @@ def possible_divisions(window) -> list:
     list_of_possible_divisions = []
     for i in range(100):
         if is_grid_valid(window, i):
-            list_of_possible_divisions.append(i)
+            if i != 1:
+                list_of_possible_divisions.append(i)
 
     return list_of_possible_divisions
