@@ -18,7 +18,7 @@ Because of its type-first approach the application might enlarge the ```bottom m
 ## What units should I use?
 SmartGrids does not currently support automatic unit conversion as we know it from our Adobe programs. This means, that all values must be put in as point values. This includes the dimensions and margins of the page. Luckily for us, in Adobe InDesign ```1 pt. == 1 px.```. This means that when you're setting up a grid for a digital setting in Adobe InDesign you can use pixels and points interchangeably. When you're using inches or millimeters you will need to do some conversion.
 
-### Required packages
+## Required packages
 All packages may be installed via ```pip``` in the console.
 
 - [PIL](https://pypi.org/project/Pillow/)
