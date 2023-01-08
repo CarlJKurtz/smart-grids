@@ -1,12 +1,11 @@
 import os
 from fontTools import ttLib
 from pathlib import Path
-from pathlib import Path
 from PIL import ImageFont
 from collections import OrderedDict
 
 
-def cap_height(font_path: str, font_size: float):
+def cap_height(font_path: str, font_size: float) -> float:
     text = "E"
     relative_size = int(font_size * 100)
     font = ImageFont.truetype(font_path, relative_size, encoding="utf-8")
@@ -14,7 +13,7 @@ def cap_height(font_path: str, font_size: float):
     return cap_height
 
 
-def x_height(font_path: str, font_size: float):
+def x_height(font_path: str, font_size: float) -> float:
     text = "x"
     relative_size = int(font_size * 100)
     font = ImageFont.truetype(font_path, relative_size, encoding="utf-8")
@@ -22,7 +21,7 @@ def x_height(font_path: str, font_size: float):
     return x_height
 
 
-def ascender(font_path: str, font_size: float):
+def ascender(font_path: str, font_size: float) -> float:
     text = "h"
     relative_size = int(font_size * 100)
     font = ImageFont.truetype(font_path, relative_size, encoding="utf-8")
@@ -30,12 +29,13 @@ def ascender(font_path: str, font_size: float):
     return ascender
 
 
-def descender(font_path: str, font_size: float):
+def descender(font_path: str, font_size: float) -> float:
     text = "p"
     relative_size = int(font_size * 100)
     font = ImageFont.truetype(font_path, relative_size, encoding="utf-8")
-    height_p = (-font.getbbox(text, anchor="ld")[1] / 100)
-    descender = height_p - x_height(font_path, font_size)
+    height_baseline_p = (-font.getbbox(text, anchor="ls")[1] / 100)
+    height_p = (-font.getbbox(text, anchor="lb")[1] / 100)
+    descender = height_p - height_baseline_p
     return descender
 
 
