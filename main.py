@@ -6,7 +6,6 @@ from grid_functions import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from UnitSpinBox import *
 
 
 class Window(QWidget):
@@ -61,28 +60,28 @@ class Window(QWidget):
 
         self.page_width_label = QLabel("Page width:")
 
-        self.page_width_spinbox = QDoubleSpinBox(maximum=100000, value=PAGE_WIDTH)
+        self.page_width_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=PAGE_WIDTH)
         self.page_width_spinbox.valueChanged.connect(self.update)
         page_config.addRow(self.page_width_label, self.page_width_spinbox)
 
         self.page_height_label = QLabel("Page height:")
-        self.page_height_spinbox = QDoubleSpinBox(maximum=100000, value=PAGE_HEIGHT)
+        self.page_height_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=PAGE_HEIGHT)
         self.page_height_spinbox.valueChanged.connect(self.update)
         page_config.addRow(self.page_height_label, self.page_height_spinbox)
         self.top_margin_label = QLabel("Top margin:")
-        self.top_margin_spinbox = QDoubleSpinBox(maximum=100000, value=TOP_MARGIN)
+        self.top_margin_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=TOP_MARGIN)
         self.top_margin_spinbox.valueChanged.connect(self.update)
         page_config.addRow(self.top_margin_label, self.top_margin_spinbox)
         self.bottom_margin_label = QLabel("Bottom margin:")
-        self.bottom_margin_spinbox = QDoubleSpinBox(maximum=100000, value=BOTTOM_MARGIN)
+        self.bottom_margin_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=BOTTOM_MARGIN)
         self.bottom_margin_spinbox.valueChanged.connect(self.update)
         page_config.addRow(self.bottom_margin_label, self.bottom_margin_spinbox)
         self.left_margin_label = QLabel("Left margin:")
-        self.left_margin_spinbox = QDoubleSpinBox(maximum=100000, value=LEFT_MARGIN)
+        self.left_margin_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=LEFT_MARGIN)
         self.left_margin_spinbox.valueChanged.connect(self.update)
         page_config.addRow(self.left_margin_label, self.left_margin_spinbox)
         self.right_margin_label = QLabel("Right margin:")
-        self.right_margin_spinbox = QDoubleSpinBox(maximum=100000, value=RIGHT_MARGIN)
+        self.right_margin_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=RIGHT_MARGIN)
         self.right_margin_spinbox.valueChanged.connect(self.update)
         page_config.addRow(self.right_margin_label, self.right_margin_spinbox)
 
@@ -97,11 +96,11 @@ class Window(QWidget):
         self.font_dropdown.currentTextChanged.connect(self.update)
         type_config.addRow(self.font_label, self.font_dropdown)
         self.font_size_label = QLabel("Font size:")
-        self.font_size_spinbox = QDoubleSpinBox(maximum=100000, value=FONT_SIZE)
+        self.font_size_spinbox = QDoubleSpinBox(suffix = " pt", maximum=100000, value=FONT_SIZE)
         self.font_size_spinbox.valueChanged.connect(self.update)
         type_config.addRow(self.font_size_label, self.font_size_spinbox)
         self.leading_label = QLabel("Leading:")
-        self.leading_spinbox = QDoubleSpinBox(maximum=100000, minimum=0.01, value=LEADING)
+        self.leading_spinbox = QDoubleSpinBox(suffix = " pt", maximum=100000, minimum=0.01, value=LEADING)
         self.leading_spinbox.valueChanged.connect(self.update)
         type_config.addRow(self.leading_label, self.leading_spinbox)
 
@@ -126,7 +125,7 @@ class Window(QWidget):
         self.use_custom_gutter_checkbox.stateChanged.connect(self.update)
         grid_config.addRow(self.use_custom_gutter_label, self.use_custom_gutter_checkbox)
         self.custom_gutter_label = QLabel("Column gutter:")
-        self.custom_gutter_spinbox = QDoubleSpinBox(maximum=100000, value=GUTTER)
+        self.custom_gutter_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=GUTTER)
         self.custom_gutter_spinbox.valueChanged.connect(self.update)
         grid_config.addRow(self.custom_gutter_label, self.custom_gutter_spinbox)
         self.show_baseline_grid_label = QLabel("Show baseline-grid:")
