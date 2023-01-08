@@ -5,7 +5,7 @@
 SmartGrids is a small, free application that allows you to easily configure and preview typography grids.
 You can input parameters like the page size, margins, font size, and leading, SmartGrids will then show you possible grid configurations.
 
-Unlike the built-in grid creation tools in Adobe InDesign, the grids will automatically be aligned to your body copy. The gridlines can be aligned with the cap-height, ascender, or x-height of the text. It also allows for a baseline shift so that the gridlines don't align with the baseline of the text but with the descenders.
+Unlike the built-in grid creation tools in Adobe InDesign, SmartGrids will automatically align the grid to your body copy. The gridlines can be aligned with the cap-height, ascender, or x-height of the text. It also allows for a baseline shift so that the gridlines don't align with the baseline of the text but with the descenders.
 
 ![preview image](assets/readme_image-1.png)
 
