@@ -1,8 +1,11 @@
 .idea
-.DS_Store
+
+# Build stuff
+SmartGrids.spec
 /build/
 /dist/
-main.spec
-SmartGrids.spec
 /build.py
 /builddmg.sh
+
+# Finder turds
+.DS_Store
