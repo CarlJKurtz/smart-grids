@@ -5,3 +5,4 @@
 main.spec
 SmartGrids.spec
 /build.py
+/builddmg.sh
