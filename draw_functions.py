@@ -1,4 +1,3 @@
-from config import *
 from grid_functions import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
@@ -88,7 +87,6 @@ class Page():
                 j = j+1
                 y = y - (dif_capheight_leading(self.window) * self.scale)
                 i = i+1
-
 
     def draw_columns(self):
         if (self.window.columns_spinbox.value() - 1) * self.window.column_gutter < text_area_width(self.window) and self.window.columns_spinbox.value() > 0:

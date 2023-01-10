@@ -3,6 +3,8 @@ from fontTools import ttLib
 from pathlib import Path
 from PIL import ImageFont
 from collections import OrderedDict
+
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'

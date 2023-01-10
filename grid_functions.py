@@ -6,11 +6,6 @@ from config import *
 def text_area_height(window) -> float:
     text_area_height = window.page_height_spinbox.value() - window.top_margin_spinbox.value() - window.bottom_margin_spinbox.value()
 
-    '''
-    if text_area_height <= 0:
-        window.throw_error("Height of text area is less or equal 0!")
-    '''
-
     return text_area_height
 
 
@@ -112,6 +107,7 @@ def lines_in_cell(window) -> int:
 
     else:
         return 0
+
 
 def possible_divisions(window) -> list:
     list_of_possible_divisions = []

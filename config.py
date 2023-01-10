@@ -1,4 +1,4 @@
-APP_TITLE       = "Smart Grids"
+APP_TITLE       = "SmartGrids"
 APP_VERSION     = "1.1.1"
 
 DEBUG           = False
