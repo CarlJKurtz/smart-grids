@@ -1,7 +1,7 @@
 .idea
 
 # Build stuff
-SmartGrids.spec
+build.spec
 /build/
 /dist/
 /build.py
