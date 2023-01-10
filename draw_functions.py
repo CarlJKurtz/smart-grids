@@ -51,12 +51,12 @@ class Page():
         painter = QPainter(self.window.canvas)
         painter.setPen(QPen(WHITE, Qt.SolidPattern))
         painter.setBrush(QBrush(WHITE, Qt.SolidPattern))
-        painter.drawRect(self.x_pos, self.y_pos, self.width * self.scale, self.height * self.scale)
+        painter.drawRect(int(self.x_pos), int(self.y_pos), int(self.width * self.scale), int(self.height * self.scale))
 
     def draw_text_area(self):
         painter = QPainter(self.window.canvas)
         painter.setPen(QPen(MAGENTA, Qt.SolidPattern))
-        painter.drawRect(self.x_pos + (self.window.left_margin_spinbox.value() * self.scale), self.y_pos + (self.window.top_margin_spinbox.value() * self.scale),  text_area_width(self.window) * self.scale, corrected_text_area_height(self.window) * self.scale)
+        painter.drawRect(int(self.x_pos + (self.window.left_margin_spinbox.value() * self.scale)), int(self.y_pos + (self.window.top_margin_spinbox.value() * self.scale)),  int(text_area_width(self.window) * self.scale), int(corrected_text_area_height(self.window) * self.scale))
 
     def draw_baseline_grid(self):
         if self.window.show_baseline_grid_checkbox.isChecked() and self.window.leading_spinbox.value() >= 0.1:
@@ -79,11 +79,11 @@ class Page():
 
             for i in range(self.window.rows_spinbox.value() - 1):
                 y = y + self.window.leading_spinbox.value() * self.scale * lines_in_cell(self.window)
-                painter.drawLine(line_x, y, line_x2, y)
+                painter.drawLine(int(line_x), int(y), int(line_x2), int(y))
                 for j in range(self.window.lines_in_gutter_spinbox.value()):
                     y = y + self.window.leading_spinbox.value() * self.scale
                 y = y + (dif_capheight_leading(self.window) * self.scale)
-                painter.drawLine(line_x, y, line_x2, y)
+                painter.drawLine(int(line_x), int(y), int(line_x2), int(y))
                 j = j+1
                 y = y - (dif_capheight_leading(self.window) * self.scale)
                 i = i+1
@@ -99,9 +99,9 @@ class Page():
 
             for i in range(self.window.columns_spinbox.value() - 1):
                 x = x + column_width * self.scale
-                painter.drawLine(x, y1, x, y2)
+                painter.drawLine(int(x), int(y1), int(x), int(y2))
                 x = x + self.window.column_gutter * self.scale
-                painter.drawLine(x, y1, x, y2)
+                painter.drawLine(int(x), int(y1), int(x), int(y2))
 
 
 def refresh_canvas(window):

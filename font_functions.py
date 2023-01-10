@@ -59,10 +59,25 @@ def font_dict() -> OrderedDict:
     adobe_test_font_path = os.path.join("/Library/Application Support/Adobe/Fonts")
     system_fonts_path = "/System/Library/Fonts"
 
-    list_of_adobe_fonts = os.listdir(adobe_fonts_path)
-    list_of_user_fonts = os.listdir(user_fonts_path)
-    list_of_adobe_test_fonts = os.listdir(adobe_test_font_path)
-    list_of_system_fonts = os.listdir(system_fonts_path)
+    try:
+        list_of_adobe_fonts = os.listdir(adobe_fonts_path)
+    except:
+        pass
+
+    try:
+        list_of_user_fonts = os.listdir(user_fonts_path)
+    except:
+        pass
+
+    try:
+        list_of_adobe_test_fonts = os.listdir(adobe_test_font_path)
+    except:
+        pass
+
+    try:
+        list_of_system_fonts = os.listdir(system_fonts_path)
+    except:
+        pass
 
     for font in list_of_user_fonts:
         try:
