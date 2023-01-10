@@ -61,62 +61,56 @@ def font_dict() -> OrderedDict:
 
     try:
         list_of_adobe_fonts = os.listdir(adobe_fonts_path)
+        for font in list_of_adobe_fonts:
+            try:
+                installed_fonts.update(
+                    {short_name(os.path.join(adobe_fonts_path, font)): os.path.join(adobe_fonts_path, font)})
+
+            except:
+                pass
     except:
         pass
 
     try:
         list_of_user_fonts = os.listdir(user_fonts_path)
+
+        for font in list_of_user_fonts:
+            try:
+                installed_fonts.update(
+                    {short_name(os.path.join(user_fonts_path, font)): os.path.join(user_fonts_path, font)})
+
+            except:
+                pass
     except:
         pass
 
     try:
         list_of_adobe_test_fonts = os.listdir(adobe_test_font_path)
+        for font in list_of_adobe_test_fonts:
+            try:
+                installed_fonts.update(
+                    {short_name(os.path.join(adobe_test_font_path, font)): os.path.join(adobe_test_font_path, font)})
+
+            except:
+                pass
     except:
         pass
 
     try:
         list_of_system_fonts = os.listdir(system_fonts_path)
-    except:
-        pass
-
-    for font in list_of_user_fonts:
-        try:
-            installed_fonts.update(
-                {short_name(os.path.join(user_fonts_path, font)): os.path.join(user_fonts_path, font)})
-
-        except:
-            pass
-
-    for font in list_of_system_fonts:
-        try:
-            installed_fonts.update(
-                {short_name(os.path.join(system_fonts_path, font)): os.path.join(system_fonts_path, font)})
-
-        except:
+        for font in list_of_system_fonts:
             try:
-                installed_fonts.update({font[:-4]: os.path.join(system_fonts_path, font)})
+                installed_fonts.update(
+                    {short_name(os.path.join(system_fonts_path, font)): os.path.join(system_fonts_path, font)})
 
             except:
-                print(f"{bcolors.FAIL}[!]{bcolors.ENDC} failed to add {os.path.join(system_fonts_path, font)}")
+                try:
+                    installed_fonts.update({font[:-4]: os.path.join(system_fonts_path, font)})
 
-
-
-
-    for font in list_of_adobe_fonts:
-        try:
-            installed_fonts.update(
-                {short_name(os.path.join(adobe_fonts_path, font)): os.path.join(adobe_fonts_path, font)})
-
-        except:
-            pass
-
-    for font in list_of_adobe_test_fonts:
-        try:
-            installed_fonts.update(
-                {short_name(os.path.join(adobe_test_font_path, font)): os.path.join(adobe_test_font_path, font)})
-
-        except:
-            pass
+                except:
+                    print(f"{bcolors.FAIL}[!]{bcolors.ENDC} failed to add {os.path.join(system_fonts_path, font)}")
+    except:
+        pass
 
     installed_fonts = OrderedDict(sorted(installed_fonts.items()))
 
