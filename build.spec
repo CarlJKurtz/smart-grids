@@ -47,4 +47,6 @@ app = BUNDLE(
     name='SmartGrids.app',
     icon='./assets/smart_grids-icon.png',
     bundle_identifier=None,
+    version='1.1.2',
+
 )
