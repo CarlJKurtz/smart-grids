@@ -1,11 +1,8 @@
 .idea
 
 # Build stuff
-build.spec
 /build/
 /dist/
-/build.py
-/builddmg.sh
 
 # Finder turds
 .DS_Store
