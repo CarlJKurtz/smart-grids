@@ -6,8 +6,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
-# Venv test
-
 
 class Window(QWidget):
     resized = pyqtSignal()
