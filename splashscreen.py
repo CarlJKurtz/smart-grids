@@ -38,4 +38,4 @@ class SplashScreen(QSplashScreen):
 
 
 
-        QTimer.singleShot(10000, self.close)
+        QTimer.singleShot(6000, self.close)
