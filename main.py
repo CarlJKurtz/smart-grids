@@ -5,6 +5,7 @@ from grid_functions import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from splashscreen import *
 
 
 class Window(QWidget):
@@ -13,6 +14,7 @@ class Window(QWidget):
     def __init__(self):
         super().__init__()
         self.font_dict = font_dict()
+        self.show_splash()
         self.init_ui()
         self.resized.connect(self.update)
         self.bottom_alignment_value = self.update_bottom_alignment_value()
@@ -280,11 +282,16 @@ class Window(QWidget):
 
         msg.exec_()
 
+    def show_splash(self):
+        self.splash = SplashScreen()
+        self.splash.show()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon('assets/smart_grids-icon.png'))
     window = Window()
     window.show()
+    window.show_splash()
 
     sys.exit(app.exec_())
