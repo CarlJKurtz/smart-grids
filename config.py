@@ -1,5 +1,5 @@
 APP_TITLE       = "SmartGrids"
-APP_VERSION     = "1.1.2"
+APP_VERSION     = "1.2.2"
 
 DEBUG           = False
 
