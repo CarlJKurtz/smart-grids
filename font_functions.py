@@ -3,7 +3,6 @@ from fontTools import ttLib
 from PIL import ImageFont
 from collections import OrderedDict
 
-
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -56,6 +55,7 @@ def add_fonts_to_dict(directory_path: str, font_dict: dict) -> None:
         for font in list_of_fonts:
             try:
                 font_path = os.path.join(directory_path, font)
+
                 font_name = short_name(font_path)
                 if font_name[0] == '.':
                     font_name = font_name[1:]

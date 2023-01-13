@@ -3,6 +3,7 @@
 # Build stuff
 /build/
 /dist/
+/fonts/
 
 # Finder turds
 .DS_Store
