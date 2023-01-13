@@ -1,6 +1,5 @@
 import font_functions
 import math
-from config import *
 
 
 def text_area_height(window) -> float:

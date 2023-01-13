@@ -1,7 +1,5 @@
-import os
 from config import *
 from fontTools import ttLib
-from pathlib import Path
 from PIL import ImageFont
 from collections import OrderedDict
 
@@ -75,15 +73,7 @@ def add_fonts_to_dict(directory_path: str, font_dict: dict) -> None:
 
 def font_dict() -> OrderedDict:
     installed_fonts = {}
-    home_path = str(Path.home())
-
-    font_directories = [
-        os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r"),
-        os.path.join(home_path, "Library/Fonts"),
-        os.path.join("/Library/Application Support/Adobe/Fonts"),
-        "/System/Library/Fonts",
-
-    ]
+    font_directories = FONT_DIRECTORIES
 
     for path in font_directories:
         add_fonts_to_dict(path, installed_fonts)
@@ -93,7 +83,7 @@ def font_dict() -> OrderedDict:
     return installed_fonts
 
 
-def short_name(font):
+def short_name(font) -> str:
     tt = ttLib.TTFont(font)
     name = ""
     family = ""

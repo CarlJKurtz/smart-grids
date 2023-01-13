@@ -1,6 +1,7 @@
 from grid_functions import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
+from config import *
 
 BLACK = QColor(0, 0, 0)
 WHITE = QColor(255, 255, 255)
