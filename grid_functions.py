@@ -88,14 +88,8 @@ def is_grid_valid(window, cells) -> bool:
         lines_per_cell = (math.floor(possible_lines(window)) - (cells - 1) * window.lines_in_gutter_spinbox.value()) / cells
         if lines_per_cell.is_integer() and lines_per_cell > 0:
             is_valid = True
-            if DEBUG:
-                print("Is Valid!")
-                print(lines_per_cell)
         else:
             is_valid = False
-            if DEBUG:
-                print("NOT Valid!")
-                print(lines_per_cell)
 
         return is_valid
 

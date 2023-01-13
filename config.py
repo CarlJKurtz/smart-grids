@@ -1,7 +1,7 @@
 APP_TITLE       = "SmartGrids"
 APP_VERSION     = "1.2.2"
 
-DEBUG           = False
+DEBUG           = True
 
 CANVAS_WIDTH    = 10
 CANVAS_HEIGHT   = 10

@@ -1,4 +1,5 @@
 import os
+from config import *
 from fontTools import ttLib
 from pathlib import Path
 from PIL import ImageFont
@@ -51,66 +52,41 @@ def descender(font_path: str, font_size: float) -> float:
     return descender
 
 
+def add_fonts_to_dict(directory_path: str, font_dict: dict) -> None:
+    try:
+        list_of_fonts = os.listdir(directory_path)
+        for font in list_of_fonts:
+            try:
+                font_path = os.path.join(directory_path, font)
+                font_name = short_name(font_path)
+                if font_name[0] == '.':
+                    font_name = font_name[1:]
+                font_dict.update({font_name: font_path})
+
+                if DEBUG:
+                    print(f"{bcolors.OKGREEN}[!]{bcolors.ENDC} Loaded {font_name}.")
+
+            except:
+                print(f"{bcolors.FAIL}[!]{bcolors.ENDC} Failed to load font from {directory_path}.")
+
+    except:
+        print(f"{bcolors.FAIL}[!]{bcolors.ENDC} Failed to access {directory_path}. It might not exist on your system.")
+
+
 def font_dict() -> OrderedDict:
     installed_fonts = {}
     home_path = str(Path.home())
-    adobe_fonts_path = os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r")
-    user_fonts_path = os.path.join(home_path, "Library/Fonts")
-    adobe_test_font_path = os.path.join("/Library/Application Support/Adobe/Fonts")
-    system_fonts_path = "/System/Library/Fonts"
 
-    try:
-        list_of_adobe_fonts = os.listdir(adobe_fonts_path)
-        for font in list_of_adobe_fonts:
-            try:
-                installed_fonts.update(
-                    {short_name(os.path.join(adobe_fonts_path, font)): os.path.join(adobe_fonts_path, font)})
+    font_directories = [
+        os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r"),
+        os.path.join(home_path, "Library/Fonts"),
+        os.path.join("/Library/Application Support/Adobe/Fonts"),
+        "/System/Library/Fonts",
 
-            except:
-                pass
-    except:
-        pass
+    ]
 
-    try:
-        list_of_user_fonts = os.listdir(user_fonts_path)
-
-        for font in list_of_user_fonts:
-            try:
-                installed_fonts.update(
-                    {short_name(os.path.join(user_fonts_path, font)): os.path.join(user_fonts_path, font)})
-
-            except:
-                pass
-    except:
-        pass
-
-    try:
-        list_of_adobe_test_fonts = os.listdir(adobe_test_font_path)
-        for font in list_of_adobe_test_fonts:
-            try:
-                installed_fonts.update(
-                    {short_name(os.path.join(adobe_test_font_path, font)): os.path.join(adobe_test_font_path, font)})
-
-            except:
-                pass
-    except:
-        pass
-
-    try:
-        list_of_system_fonts = os.listdir(system_fonts_path)
-        for font in list_of_system_fonts:
-            try:
-                installed_fonts.update(
-                    {short_name(os.path.join(system_fonts_path, font)): os.path.join(system_fonts_path, font)})
-
-            except:
-                try:
-                    installed_fonts.update({font[:-4]: os.path.join(system_fonts_path, font)})
-
-                except:
-                    print(f"{bcolors.FAIL}[!]{bcolors.ENDC} failed to add {os.path.join(system_fonts_path, font)}")
-    except:
-        pass
+    for path in font_directories:
+        add_fonts_to_dict(path, installed_fonts)
 
     installed_fonts = OrderedDict(sorted(installed_fonts.items()))
 
