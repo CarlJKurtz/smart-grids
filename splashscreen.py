@@ -17,25 +17,22 @@ class SplashScreen(QSplashScreen):
         logo_label.setPixmap(logo)
         logo_label.move(20, 20)
 
-        app_name = QLabel(APP_TITLE, self)
-        app_name.setFont(QFont('Default', 42, weight=QFont.Bold))
-        app_name.move(108, 25)
+        app_name_label = QLabel(APP_TITLE, self)
+        app_name_label.setFont(QFont('Default', 42, weight=QFont.Bold))
+        app_name_label.move(108, 25)
 
+        version_label = QLabel(f'v. {APP_VERSION}', self)
+        version_label.setFont(QFont('Courier', 14))
+        version_label.move(113, 75)
+        version_label.setStyleSheet("color: grey;")
 
-        version = QLabel(f'v. {APP_VERSION}', self)
-        version.setFont(QFont('Courier', 14))
-        version.move(113, 75)
-        version.setStyleSheet("color: grey;")
-
-        copyright = QLabel(f'{APP_TITLE} was created by Carl J.  Kurtz in 2022\n'
+        copyright_label = QLabel(f'{APP_TITLE} was created by Carl J.  Kurtz in 2022\n'
                            f'It is maintained by him and the GitHub community.\n'
                            f'\n'
                            f'\n'
                            f'Visit SmartGrids on GitHub.com for more information.', self)
-        copyright.setFont(QFont('Default', 14))
-        copyright.move(25, 140)
-        copyright.setStyleSheet("color: lightgrey;")
+        copyright_label.setFont(QFont('Default', 14))
+        copyright_label.move(25, 140)
+        copyright_label.setStyleSheet("color: lightgrey;")
 
-
-
-        QTimer.singleShot(6000, self.close)
+        QTimer.singleShot(10000, self.close)
