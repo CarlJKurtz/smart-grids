@@ -3,8 +3,13 @@
 
 block_cipher = None
 
+added_files = [
+    ('assets/smart_grids-icon.png', 'assets'),
+    ('assets/splashscreen.png', 'assets')
+    ]
 
 a = Analysis(
+    datas=added_files,
     ['main.py'],
     pathex=[],
     binaries=[],
@@ -42,6 +47,7 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
 )
+
 app = BUNDLE(
     exe,
     name='SmartGrids.app',
