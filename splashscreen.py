@@ -2,17 +2,21 @@ from config import *
 from PyQt5.QtWidgets import QSplashScreen, QLabel
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt, QTimer
-
+import os
+import sys
 
 class SplashScreen(QSplashScreen):
     def __init__(self):
         super(QSplashScreen, self).__init__()
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
-        background_image = QPixmap('assets/splashscreen.png')
+        bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
+        path_to_splashscreen = os.path.abspath(os.path.join(bundle_dir, 'assets/splashscreen.png'))
+        background_image = QPixmap(path_to_splashscreen)
         self.setPixmap(background_image)
         self.setMask(background_image.mask())
 
-        logo = QPixmap('assets/smart_grids-icon.png').scaledToWidth(80)
+        path_to_logo = os.path.abspath(os.path.join(bundle_dir, 'assets/smart_grids-icon.png'))
+        logo = QPixmap(path_to_logo).scaledToWidth(80)
         logo_label = QLabel(self)
         logo_label.setPixmap(logo)
         logo_label.move(20, 20)
