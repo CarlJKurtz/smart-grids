@@ -9,11 +9,10 @@ added_files = [
     ]
 
 a = Analysis(
-    datas=added_files,
     ['main.py'],
+    datas=added_files,
     pathex=[],
     binaries=[],
-    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
