@@ -35,5 +35,7 @@ FONT_DIRECTORIES = [
         os.path.join(home_path, "Library/Fonts"),
         os.path.join("/Library/Application Support/Adobe/Fonts"),
         "/System/Library/Fonts",
+        os.path.join(home_path, 'Windows\Fonts'),
+        os.path.join(home_path, 'AppData\Roaming\Adobe\CoreSync\plugins\livetype\r')
 
     ]
