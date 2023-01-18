@@ -5,13 +5,7 @@ home_path = str(Path.home())
 
 APP_TITLE        = "SmartGrids"
 APP_VERSION      = "1.2.3"
-
 DEBUG            = True
-
-CANVAS_WIDTH     = 10
-CANVAS_HEIGHT    = 10
-
-CANVAS_PADDING   = 10
 
 # Default values
 PAGE_WIDTH       = 1920.0
@@ -29,6 +23,10 @@ ROWS             = 6
 LINES_IN_GUTTER  = 1
 COLUMNS          = 9
 GUTTER           = 50
+
+# Font directories
+# To include new font into the dropdown list, add the path to the directory to the list
+# All paths which don't contain fontfiles or do not exist will be ignored
 
 FONT_DIRECTORIES = [
         os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r"),
