@@ -1,7 +1,6 @@
 from grid_functions import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
-from config import *
 
 BLACK = QColor(0, 0, 0)
 WHITE = QColor(255, 255, 255)
@@ -9,6 +8,9 @@ MAGENTA = QColor(255, 0, 255)
 LIGHT_GRAY = QColor(230, 230, 230)
 CYAN = QColor(0, 255, 255)
 
+canvas_width     = 10
+canvas_height    = 10
+canvas_padding   = 10
 
 class Page():
     def __init__(self, window):
@@ -25,11 +27,11 @@ class Page():
             page_is_wider = False
 
         if page_is_wider:
-            page_width_displayed = self.window.canvas_width - CANVAS_PADDING * 2
+            page_width_displayed = self.window.canvas_width - canvas_padding * 2
             scale = page_width_displayed / self.width
             return scale
         else:
-            page_height_displayed = self.window.canvas_height - CANVAS_PADDING * 2
+            page_height_displayed = self.window.canvas_height - canvas_padding * 2
             scale = page_height_displayed / self.height
             return scale
 
@@ -41,10 +43,10 @@ class Page():
 
         if page_is_wider:
             y = self.window.canvas_height / 2 - (self.height * self.scale) / 2
-            x = CANVAS_PADDING
+            x = canvas_padding
         else:
             x = self.window.canvas_width / 2 - (self.width * self.scale) / 2
-            y = CANVAS_PADDING
+            y = canvas_padding
 
         return x, y
 
@@ -57,17 +59,17 @@ class Page():
     def draw_text_area(self):
         painter = QPainter(self.window.canvas)
         painter.setPen(QPen(MAGENTA, Qt.SolidPattern))
-        painter.drawRect(int(self.x_pos + (self.window.left_margin_spinbox.value() * self.scale)), int(self.y_pos + (self.window.top_margin_spinbox.value() * self.scale)),  int(text_area_width(self.window) * self.scale), int(corrected_text_area_height(self.window) * self.scale))
+        painter.drawRect(int(self.x_pos + (self.window.left_margin_spinbox.value() * self.scale)), int(self.y_pos + (self.window.top_margin_spinbox.value() * self.scale)), int(get_text_area_width(self.window) * self.scale), int(corrected_text_area_height(self.window) * self.scale))
 
     def draw_baseline_grid(self):
         if self.window.show_baseline_grid_checkbox.isChecked() and self.window.leading_spinbox.value() >= 0.1:
             painter = QPainter(self.window.canvas)
             painter.setPen(QPen(LIGHT_GRAY, Qt.SolidPattern))
-            y_pos = self.y_pos + grid_start_position(self.window) * self.scale + self.window.leading_spinbox.value() * self.scale
+            y_pos = self.y_pos + get_grid_start_position(self.window) * self.scale + self.window.leading_spinbox.value() * self.scale
             line_x = self.x_pos + (self.window.left_margin_spinbox.value() * self.scale)
-            line_x2 = line_x + (text_area_width(self.window) * self.scale)
-            while y_pos < (text_area_height(self.window) * self.scale + self.y_pos + self.window.top_margin_spinbox.value() * self.scale):
-                painter.drawLine(line_x, y_pos, line_x2, y_pos)
+            line_x2 = line_x + (get_text_area_width(self.window) * self.scale)
+            while y_pos < (get_text_area_height(self.window) * self.scale + self.y_pos + self.window.top_margin_spinbox.value() * self.scale):
+                painter.drawLine(int(line_x), int(y_pos), int(line_x2), int(y_pos))
                 y_pos = y_pos + (self.window.leading_spinbox.value() * self.scale)
 
     def draw_rows(self):
@@ -75,7 +77,7 @@ class Page():
             painter = QPainter(self.window.canvas)
             painter.setPen(QPen(CYAN, Qt.SolidPattern))
             line_x = self.x_pos + (self.window.left_margin_spinbox.value() * self.scale)
-            line_x2 = line_x + (text_area_width(self.window) * self.scale)
+            line_x2 = line_x + (get_text_area_width(self.window) * self.scale)
             y = self.y_pos + (self.window.top_margin_spinbox.value() * self.scale) - (dif_capheight_leading(self.window) * self.scale)
 
             for i in range(self.window.rows_spinbox.value() - 1):
@@ -90,13 +92,13 @@ class Page():
                 i = i+1
 
     def draw_columns(self):
-        if (self.window.columns_spinbox.value() - 1) * self.window.column_gutter < text_area_width(self.window) and self.window.columns_spinbox.value() > 0:
+        if (self.window.columns_spinbox.value() - 1) * self.window.column_gutter < get_text_area_width(self.window) and self.window.columns_spinbox.value() > 0:
             painter = QPainter(self.window.canvas)
             painter.setPen(QPen(CYAN, Qt.SolidPattern))
             x = self.x_pos + (self.window.left_margin_spinbox.value() * self.scale)
             y1 = self.y_pos + self.window.top_margin_spinbox.value() * self.scale
             y2 = self.y_pos + (self.height - corrected_bottom_margin(self.window)) * self.scale
-            column_width = (text_area_width(self.window) - (self.window.columns_spinbox.value() - 1) * self.window.column_gutter) / self.window.columns_spinbox.value()
+            column_width = (get_text_area_width(self.window) - (self.window.columns_spinbox.value() - 1) * self.window.column_gutter) / self.window.columns_spinbox.value()
 
             for i in range(self.window.columns_spinbox.value() - 1):
                 x = x + column_width * self.scale
