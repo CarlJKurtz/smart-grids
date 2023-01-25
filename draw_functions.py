@@ -12,7 +12,8 @@ canvas_width     = 10
 canvas_height    = 10
 canvas_padding   = 10
 
-class Page():
+
+class Page:
     def __init__(self, window):
         self.window = window
         self.width = window.page_width_spinbox.value()

@@ -8,7 +8,6 @@ from PyQt5.QtCore import *
 from splashscreen import *
 
 
-
 class Window(QWidget):
     resized = pyqtSignal()
 
