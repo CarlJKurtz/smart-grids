@@ -53,6 +53,7 @@ All packages may be installed via ```pip3``` in the terminal.
 - [FontTools](https://pypi.org/project/fonttools/)
 - [PyQt5](https://pypi.org/project/PyQt5/)
 
+# About
 ### Support
 SmartGrids is entirely free of charge for both commercial and private use! But code doesn't write itself — so please consider sharing this project with a fellow design aficionado, or even support the project by sponsoring it here on GitHub if you got some use out of it!
 
