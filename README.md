@@ -20,10 +20,10 @@ The easiest way is to download the latest release, which will download a ```.dmg
 
 **Download the source code:**
 If you prefer the nerdy way, you can download the source code and run the ```main.py``` file with python.
-This requires you to have python3 and the required packages installed. (See [Required packages](##-Required-packages))
+This requires you to have python3 and the required packages installed. (See [Required packages](Required-packages))
 
 ### Windows:
-On Windows, you need to download the source code and run the ```main.py``` file via python. This requires the same packages to be installed. (See [Required packages](##Required-packages))
+On Windows, you need to download the source code and run the ```main.py``` file via python. This requires the same packages to be installed. (See [Required packages](Required-packages))
 *Note:* SmartGrids is primarily developed for MacOS. Therefore not all features might be available on windows at this point.
 
 ### Compile SmartGrids from source:
@@ -43,6 +43,7 @@ When setting up a grid with SmartGrids it is helpful to know your Page dimension
 ### What units should you use?
 SmartGrids does not currently support automatic unit conversion as we know it from our Adobe programs. This means, that all values must be put in as point values. This includes the dimensions and margins of the page. Luckily for us, in Adobe InDesign ```1 pt. == 1 px.```. This means that when you're setting up a grid for a digital setting in Adobe InDesign you can use pixels and points interchangeably. When you're using inches or millimeters you will need to do some conversion.
 
+<a name="Required-packages"></a>
 ## Required packages
 All packages may be installed via ```pip3``` in the terminal.
 
