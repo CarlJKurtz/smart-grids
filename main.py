@@ -1,5 +1,6 @@
 import sys
 from font_functions import *
+from font_loader import *
 from draw_functions import *
 from grid_functions import *
 from PyQt5.QtWidgets import *
@@ -154,17 +155,16 @@ class Window(QWidget):
         self.text_area_height_value = QLabel(str(get_text_area_height(self)))
         output_layout.addRow("Text area height:", self.text_area_height_value)
 
-        self.ascender_value = QLabel(str(get_ascender(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())))
+        self.ascender_value = QLabel(str(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("Ascender:", self.ascender_value)
 
-        self.cap_height_value = QLabel(str(get_cap_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())))
+        self.cap_height_value = QLabel(str(get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("Cap-height:", self.cap_height_value)
 
         self.x_height_value = QLabel(
-            str(get_x_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())))
+            str(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("x-height:", self.x_height_value)
-        self.descender_value = QLabel(str(round(font_functions.get_descender(self.font_dict.get(self.font_dropdown.currentText()),
-                                                                             self.font_size_spinbox.value()), 3)))
+        self.descender_value = QLabel(str(round(font_functions.get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
         output_layout.addRow("Descender:", self.descender_value)
 
         vertical_alignment_group = QGroupBox("Vertical alignment")
@@ -215,11 +215,11 @@ class Window(QWidget):
 
     def update_top_alignment_value(self):
         if self.ascender_radio.isChecked():
-            top_alignment_value = font_functions.get_ascender(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())
+            top_alignment_value = font_functions.get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())
         elif self.cap_height_radio.isChecked():
-            top_alignment_value = font_functions.get_cap_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())
+            top_alignment_value = font_functions.get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())
         elif self.xheight_radio.isChecked():
-            top_alignment_value = font_functions.get_x_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value())
+            top_alignment_value = font_functions.get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())
 
         return top_alignment_value
 
@@ -227,8 +227,7 @@ class Window(QWidget):
         if self.baseline_radio.isChecked():
             bottom_alignment_value = 0
         elif self.descender_radio.isChecked():
-            bottom_alignment_value = font_functions.get_descender(self.font_dict.get(self.font_dropdown.currentText()),
-                                                                  self.font_size_spinbox.value())
+            bottom_alignment_value = font_functions.get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())
         else:
             bottom_alignment_value = 0
 
@@ -259,21 +258,21 @@ class Window(QWidget):
         draw_page(self)
         self.display_possible_divisions()
         self.text_area_height_value.setText(str(round(get_text_area_height(self), 3)))
-        self.cap_height_value.setText(str(round(font_functions.get_cap_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value()), 3)))
+        self.cap_height_value.setText(str(round(font_functions.get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
         self.ascender_value.setText(
-            str(round(get_ascender(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value()),
+            str(round(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()),
                       3)))
-        self.x_height_value.setText(str(round(get_x_height(self.font_dict.get(self.font_dropdown.currentText()), self.font_size_spinbox.value()), 3)))
+        self.x_height_value.setText(str(round(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
         self.grid_start_position_value.setText(str(round(get_grid_start_position(self), 3)))
         self.possible_lines_value.setText(str(round(get_possible_lines(self), 3)))
         self.corrected_bottom_margin_value.setText(str(round(corrected_bottom_margin(self), 3)))
         self.gutter_value.setText(str(round(gutter(self), 3)))
         self.lines_per_cell_value.setText(str(lines_in_cell(self)))
-        self.descender_value.setText(str(round(font_functions.get_descender(self.font_dict.get(self.font_dropdown.currentText()),
-                                                                            self.font_size_spinbox.value()), 3)))
+        self.descender_value.setText(str(round(font_functions.get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
         self.baseline_shift_value.setText(str(round(self.bottom_alignment_value, 3)))
 
         self.update_canvas_size()
+
 
     def throw_error(self, message):
         msg = QErrorMessage()
