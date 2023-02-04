@@ -1,4 +1,5 @@
 .idea
+/converted_fonts/
 
 # Build stuff
 /build/
