@@ -4,7 +4,8 @@ from pathlib import Path
 home_path = str(Path.home())
 
 APP_TITLE        = "SmartGrids"
-APP_VERSION      = "1.3.3"
+APP_VERSION      = "1.3.0"
+FILE_TYPE        = '.grid'
 DEBUG            = True
 
 # Default values

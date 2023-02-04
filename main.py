@@ -8,6 +8,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from splashscreen import *
 import webbrowser
+from file_handler import *
 
 from sys import platform
 
@@ -41,7 +42,8 @@ class Window(QMainWindow):
 
     def init_menu(self):
         menuBar = self.menuBar()
-        help_menu = menuBar.addMenu(" &Help")
+        file_menu = menuBar.addMenu(' &File')
+        help_menu = menuBar.addMenu(' &Help')
 
         reset_index_action = QAction(' Clear font index', self)
         reset_index_action.triggered.connect(self.reset_indexes)
@@ -55,6 +57,26 @@ class Window(QMainWindow):
         help_action = QAction(' Visit the GitHub', self)
         help_action.triggered.connect(self.help_action)
         help_menu.addAction(help_action)
+
+        open_file = QAction(' Open File', self)
+        open_file.setShortcut('Ctrl+O')
+        open_file.setStatusTip('Open File')
+        open_file.triggered.connect(self.file_open)
+        file_menu.addAction(open_file)
+
+        saveFile = QAction(' Save File', self)
+        saveFile.setShortcut('Ctrl+S')
+        saveFile.setStatusTip('Save File')
+        saveFile.triggered.connect(self.file_save)
+        file_menu.addAction(saveFile)
+
+    def file_save(self):
+        file_path = QFileDialog.getSaveFileName(self, 'Save File')
+        write_file(self, file_path[0])
+
+    def file_open(self):
+        file_path = QFileDialog.getOpenFileName(self, 'Open File')
+        read_file(self, file_path[0])
 
     def reset_indexes(self):
         os.remove('pickled_fonts.pkl')
