@@ -1,4 +1,6 @@
 .idea
+
+# Font loading stuff
 /converted_fonts/
 /pickled_fonts.pkl
 /pickled_paths.pkl
