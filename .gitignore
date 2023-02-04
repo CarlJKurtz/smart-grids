@@ -1,5 +1,7 @@
 .idea
 /converted_fonts/
+/pickled_fonts.pkl
+/pickled_paths.pkl
 
 # Build stuff
 /build/

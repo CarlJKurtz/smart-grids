@@ -3,6 +3,8 @@ from config import *
 from fontTools import ttLib
 from PIL import ImageFont
 from ttc_conversion import *
+import pickle
+import time
 
 
 class Colors:
@@ -105,7 +107,7 @@ class Font:
 
 
 # Loads all font-files in a directory into a giver dictionary
-def add_fonts_to_dict(directory_path: str, font_dict: dict) -> None:
+def add_fonts_to_dict(directory_path: str, font_dict: dict, indexed_fonts: dict) -> None:
     try:
         list_of_fonts = os.listdir(directory_path)
     except:
@@ -115,32 +117,58 @@ def add_fonts_to_dict(directory_path: str, font_dict: dict) -> None:
     if len(list_of_fonts) != 0:
         for font in list_of_fonts:
             font_path = os.path.join(directory_path, font)
+            if font_path not in indexed_fonts:
+                if os.path.isdir(font_path):
+                    add_fonts_to_dict(font_path, font_dict, indexed_fonts)
+                indexed_fonts.append(font_path)
+                if font[len(font) - 4:] == '.otc' or font[len(font) - 4:] == '.ttc':
+                    ttc_to_ttf(font_path)
+                    list_of_fonts = os.listdir('converted_fonts')
+                    for font in list_of_fonts:
+                        font_obj = Font('converted_fonts/'+font)
+                        os.remove('converted_fonts/'+font)
+                        if font_obj.status == 'Success':
+                            font_dict.update({font_obj.name: font_obj})
 
-            if font[len(font) - 4:] == '.otc' or font[len(font) - 4:] == '.ttc':
-                ttc_to_ttf(font_path)
-                list_of_fonts = os.listdir('converted_fonts')
-                for font in list_of_fonts:
-                    font_obj = Font('converted_fonts/'+font)
-                    os.remove('converted_fonts/'+font)
-                    if font_obj.status == 'Success':
-                        font_dict.update({font_obj.name: font_obj})
-
+                else:
+                        font_obj = Font(font_path)
+                        if font_obj.status == 'Success':
+                                font_dict.update({font_obj.name: font_obj})
             else:
-                font_obj = Font(font_path)
-                if font_obj.status == 'Success':
-                        font_dict.update({font_obj.name: font_obj})
+                if DEBUG:
+                    print(f'{Colors.OKCYAN}[!]{Colors.ENDC} {font_path} was already indexed.')
 
 
 # Loads all fonts into a dictionary from the directories given in config.py
 def create_font_dict() -> OrderedDict:
+    start_time = time.time()
     print(f'{Colors.OKCYAN}[!]{Colors.ENDC} Populating font dictionary. This may take a minute …')
-    installed_fonts = {}
+    if not os.path.isfile('pickled_paths.pkl'):
+        indexed_fonts = []
+        pickle.dump(indexed_fonts, open('pickled_paths.pkl', 'wb'))
+        installed_fonts = {}
+        pickle.dump(installed_fonts, open('pickled_fonts.pkl', 'wb'))
+    else:
+        indexed_fonts = pickle.load(open('pickled_paths.pkl', 'rb'))
+
+    if not os.path.isfile('pickled_fonts.pkl'):
+        installed_fonts = {}
+        pickle.dump(installed_fonts, open('pickled_fonts.pkl', 'wb'))
+        indexed_fonts = []
+        pickle.dump(indexed_fonts, open('pickled_paths.pkl', 'wb'))
+        installed_fonts = {}
+    else:
+        installed_fonts = pickle.load(open('pickled_fonts.pkl', 'rb'))
 
     for path in FONT_DIRECTORIES:
-        add_fonts_to_dict(path, installed_fonts)
+        add_fonts_to_dict(path, installed_fonts, indexed_fonts)
 
     installed_fonts = OrderedDict(sorted(installed_fonts.items()))
-    print(f'{Colors.OKGREEN}[!]{Colors.ENDC} Finished!')
+    pickle.dump(indexed_fonts, open('pickled_paths.pkl', 'wb'))
+    pickle.dump(installed_fonts, open('pickled_fonts.pkl', 'wb'))
+    print()
+    print(f'{Colors.OKGREEN}[!]{Colors.ENDC} Finished in {Colors.BOLD}{round(time.time() - start_time, 3)}{Colors.ENDC} seconds!')
+    print()
 
     return installed_fonts
 
