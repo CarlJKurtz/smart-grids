@@ -273,6 +273,7 @@ class Window(QWidget):
 
         self.update_canvas_size()
 
+
     def throw_error(self, message):
         msg = QErrorMessage()
         msg.setWindowTitle("Error!")
