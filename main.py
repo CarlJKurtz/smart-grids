@@ -7,31 +7,71 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from splashscreen import *
+import webbrowser
+
+from sys import platform
+
+# Adds title to MenuBar on OSX
+if platform == 'darwin':
+    from Foundation import NSBundle
+    bundle = NSBundle.mainBundle()
+    if bundle:
+        info = bundle.localizedInfoDictionary() or bundle.infoDictionary()
+        if info and info['CFBundleName'] == 'Python':
+            info['CFBundleName'] = APP_TITLE
 
 
-class Window(QWidget):
+class Window(QMainWindow):
     resized = pyqtSignal()
 
     def __init__(self):
         super().__init__()
-        self.font_dict = create_font_dict()
+        self.setWindowTitle(f"{APP_TITLE} | {APP_VERSION}")
+        self.setGeometry(100, 100, 1000, 400)
+        self.main_widget = QWidget()
+        self.setCentralWidget(self.main_widget)
         self.show_splash()
+        self.init_menu()
+        self.font_dict = create_font_dict()
         self.bottom_alignment_value = 0
         self.top_alignment_value = 0
         self.init_ui()
         self.resized.connect(self.update)
         self.column_gutter = self.update_column_gutter_value()
 
+    def init_menu(self):
+        menuBar = self.menuBar()
+        help_menu = menuBar.addMenu(" &Help")
+
+        reset_index_action = QAction(' Clear font index', self)
+        reset_index_action.triggered.connect(self.reset_indexes)
+        reset_index_action.setStatusTip('Resets the indexed fonts (Restarting the application is required)')
+        help_menu.addAction(reset_index_action)
+
+        about_action = QAction(f' About {APP_TITLE}', self)
+        about_action.triggered.connect(self.show_splash)
+        help_menu.addAction(about_action)
+
+        help_action = QAction(' Visit the GitHub', self)
+        help_action.triggered.connect(self.help_action)
+        help_menu.addAction(help_action)
+
+    def reset_indexes(self):
+        os.remove('pickled_fonts.pkl')
+        os.remove('pickled_paths.pkl')
+
+    def help_action(self):
+        webbrowser.open('https://github.com/CarlJKurtz/smart-grids', new=2)
+
     def resizeEvent(self, event):
-        self.resized.emit()
-        return super(Window, self).resizeEvent(event)
+            self.resized.emit()
+            return super(Window, self).resizeEvent(event)
 
     def init_ui(self):
-        self.setWindowTitle(f"{APP_TITLE} | {APP_VERSION}")
-        self.setGeometry(100, 100, 1000, 400)
         main_layout = QHBoxLayout()
+        self.main_widget.setLayout(main_layout)
         left_column = QVBoxLayout()
-        self.center_column = QVBoxLayout()
+        center_column = QVBoxLayout()
         right_column = QVBoxLayout()
         page_config = QFormLayout()
         type_config = QFormLayout()
@@ -42,13 +82,11 @@ class Window(QWidget):
         output_layout = QFormLayout()
 
         main_layout.addLayout(left_column, 1)
-        main_layout.addLayout(self.center_column, 2)
+        main_layout.addLayout(center_column, 2)
         main_layout.addLayout(right_column, 1)
 
-        self.setLayout(main_layout)
-
         self.canvas_label = QLabel()
-        self.center_column.addWidget(self.canvas_label, alignment=Qt.AlignTop)
+        center_column.addWidget(self.canvas_label, alignment=Qt.AlignTop)
         self.canvas_width = self.canvas_label.frameGeometry().width()
         self.canvas_height = self.canvas_width
         self.canvas_size = QSize(self.canvas_width, self.canvas_height)
@@ -272,7 +310,6 @@ class Window(QWidget):
         self.baseline_shift_value.setText(str(round(self.bottom_alignment_value, 3)))
 
         self.update_canvas_size()
-
 
     def throw_error(self, message):
         msg = QErrorMessage()
