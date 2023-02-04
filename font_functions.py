@@ -14,14 +14,14 @@ class Colors:
 
 # Returns the cap-height of a font
 def get_cap_height(font_dict, font: str, font_size: float) -> float:
-    cap_height = font_dict[font].ascender * font_size
+    cap_height = font_dict[font].cap_height * font_size
 
     return cap_height
 
 
 # Returns the x-height of a font
 def get_x_height(font_dict, font: str, font_size: float) -> float:
-    x_height = font_dict[font].ascender * font_size
+    x_height = font_dict[font].x_height * font_size
 
     return x_height
 
@@ -35,6 +35,6 @@ def get_ascender(font_dict, font: str, font_size: float) -> float:
 
 # Returns the descender length of a font
 def get_descender(font_dict, font: str, font_size: float) -> float:
-    descender = font_dict[font].ascender * font_size
+    descender = font_dict[font].descender * font_size
 
     return descender

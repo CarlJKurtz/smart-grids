@@ -23,7 +23,7 @@ class Font:
     def __init__(self, path):
         self.path = path
         if self.path[len(self.path) - 4:] == '.otc' or self.path[len(self.path) - 4:] == '.ttc':
-            self.cap_heigth = None
+            self.cap_height = None
             self.x_height = None
             self.ascender = None
             self.descender = None
@@ -33,7 +33,7 @@ class Font:
                 self.print_info()
 
         else:
-            self.cap_heigth = self.cap_height()
+            self.cap_height = self.cap_height()
             self.x_height = self.x_height()
             self.ascender = self.ascender()
             self.descender = self.descender()
@@ -82,7 +82,7 @@ class Font:
             return None
 
     def print_info(self):
-        if type(self.x_height) == float and type(self.cap_heigth) == float and type(self.ascender) == float and type(self.descender) == float:
+        if type(self.x_height) == float and type(self.cap_height) == float and type(self.ascender) == float and type(self.descender) == float:
             status_color = Colors.OKGREEN
             status = 'Success'
         else:
@@ -91,7 +91,7 @@ class Font:
 
         print(f'{status_color}[!]{Colors.ENDC} {self.name}')
         print(f'    x-height:    {self.x_height}')
-        print(f'    cap-height:  {self.cap_heigth}')
+        print(f'    cap-height:  {self.cap_height}')
         print(f'    ascender:    {self.ascender}')
         print(f'    descender:   {self.descender}')
         print(f'    path:        {self.path}')
@@ -100,7 +100,7 @@ class Font:
         print()
 
     def status(self):
-        if type(self.x_height) == float and type(self.cap_heigth) == float and type(self.ascender) == float and type(self.descender) == float and type(self.name) == str:
+        if type(self.x_height) == float and type(self.cap_height) == float and type(self.ascender) == float and type(self.descender) == float and type(self.name) == str:
             return 'Success'
         else:
             return 'Failed'
