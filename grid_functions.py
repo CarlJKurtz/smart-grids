@@ -41,7 +41,7 @@ def get_grid_start_position(window) -> float:
     top_alignemnt = window.top_alignment_value
     bottom_alignment = window.bottom_alignment_value
 
-    grid_start_position = top_margin - leading - top_alignemnt + bottom_alignment
+    grid_start_position = top_margin - (leading - top_alignemnt) + bottom_alignment
 
     return grid_start_position
 

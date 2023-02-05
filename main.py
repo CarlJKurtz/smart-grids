@@ -9,7 +9,6 @@ from PyQt5.QtCore import *
 from splashscreen import *
 import webbrowser
 from file_handler import *
-
 from sys import platform
 
 # Adds title to MenuBar on OSX
