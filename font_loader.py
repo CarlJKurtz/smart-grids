@@ -1,7 +1,6 @@
 from collections import OrderedDict
 from config import *
 from fontTools import ttLib
-from PIL import ImageFont
 from ttc_conversion import *
 import pickle
 import time
