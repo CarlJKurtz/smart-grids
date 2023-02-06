@@ -5,7 +5,7 @@ block_cipher = None
 
 added_files = [
     ('assets/smart_grids-icon.png', 'assets'),
-    ('assets/splashscreen.png', 'assets')
+    ('assets/splashscreen.png', 'assets'),
     ]
 
 a = Analysis(

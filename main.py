@@ -12,14 +12,16 @@ from file_handler import *
 from sys import platform
 
 # Adds title to MenuBar on OSX
-if platform == 'darwin':
-    from Foundation import NSBundle
-    bundle = NSBundle.mainBundle()
-    if bundle:
-        info = bundle.localizedInfoDictionary() or bundle.infoDictionary()
-        if info and info['CFBundleName'] == 'Python':
-            info['CFBundleName'] = APP_TITLE
-
+try:
+    if platform == 'darwin':
+        from Foundation import NSBundle
+        bundle = NSBundle.mainBundle()
+        if bundle:
+            info = bundle.localizedInfoDictionary() or bundle.infoDictionary()
+            if info and info['CFBundleName'] == 'Python':
+                info['CFBundleName'] = APP_TITLE
+except ModuleNotFoundError:
+    print(f'{Colors.FAIL}[!]{Colors.ENDC} Module foundation is missing. This can happen in brew environments.')
 
 class Window(QMainWindow):
     resized = pyqtSignal()

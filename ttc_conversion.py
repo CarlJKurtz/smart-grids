@@ -16,8 +16,6 @@ class Colors:
     UNDERLINE = '\033[4m'
 
 # this code is based on afdkos otc2otf
-
-
 def get_psname(font):
     if 'name' in font:
         psname = font['name'].getDebugName(6)
