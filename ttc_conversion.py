@@ -2,14 +2,7 @@ from fontTools.ttLib import sfnt, TTFont
 import os
 import pathlib
 from font_functions import *
-
-# Get correct path
-import sys
-import os
-if getattr(sys, 'frozen', False):
-    cur_path = os.path.dirname(sys.executable)
-else:
-    cur_path = str(os.path.dirname(__file__))
+from config import *
 
 class Colors:
     HEADER = '\033[95m'

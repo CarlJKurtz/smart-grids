@@ -53,5 +53,14 @@ app = BUNDLE(
     icon='./assets/smart_grids-icon.png',
     bundle_identifier=None,
     version='1.3.0',
+    info_plist={
+        'CFBundleDocumentTypes': [
+                {
+                    'CFBundleTypeName': 'grid',
+                    'LSItemContentTypes': ['com.example.grid'],
+                    'LSHandlerRank': 'Owner'
+                    }
+                ]
+    }
 
 )

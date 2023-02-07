@@ -5,14 +5,6 @@ from ttc_conversion import *
 import pickle
 import time
 
-# Get correct path
-import sys
-import os
-if getattr(sys, 'frozen', False):
-    cur_path = os.path.dirname(sys.executable)
-else:
-    cur_path = str(os.path.dirname(__file__))
-
 
 class Colors:
     HEADER = '\033[95m'
