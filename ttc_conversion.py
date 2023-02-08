@@ -2,7 +2,7 @@ from fontTools.ttLib import sfnt, TTFont
 import os
 import pathlib
 from font_functions import *
-
+from config import *
 
 class Colors:
     HEADER = '\033[95m'
@@ -24,11 +24,13 @@ def get_psname(font):
 
 
 def ttc_to_ttf(path):
-    if not os.path.isdir('converted_fonts'):
-        os.mkdir('converted_fonts')
-    if len(os.listdir('converted_fonts')) > 0:
-        print(f'{Colors.FAIL}[!]{Colors.ENDC} the directory converted_fonts is not empty!')
-        return
+    if not os.path.isdir(f'{cur_path}/converted_fonts/'):
+        os.mkdir(f'{cur_path}/converted_fonts/')
+    if len(os.listdir(f'{cur_path}/converted_fonts/')) > 0:
+        print(f'{Colors.FAIL}[!]{Colors.ENDC} the directory converted_fonts was not empty!')
+        for file in os.listdir(f'{cur_path}/converted_fonts/'):
+            os.remove(f'{cur_path}/converted_fonts/{file}')
+        pass
 
     with open(path, 'rb') as fp:
         num_fonts = sfnt.SFNTReader(fp, fontNumber=0).numFonts
@@ -43,6 +45,6 @@ def ttc_to_ttf(path):
 
         ext = '.otf' if font.sfntVersion == 'OTTO' else '.ttf'
         font_filename = f'{psname}{ext}'
-        font.save(f'{pathlib.Path(__file__).parent.resolve()}/converted_fonts/{font_filename}')
+        font.save(f'{cur_path}/converted_fonts/{font_filename}')
 
         font.close()

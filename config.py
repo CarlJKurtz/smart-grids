@@ -1,12 +1,20 @@
 import os
 from pathlib import Path
 
+# Get correct path
+import sys
+import os
+if getattr(sys, 'frozen', False):
+    cur_path = os.path.dirname(sys.executable)
+else:
+    cur_path = str(os.path.dirname(__file__))
+
 home_path = str(Path.home())
 
 APP_TITLE        = "SmartGrids"
 APP_VERSION      = "1.3.0"
 FILE_TYPE        = '.grid'
-DEBUG            = True
+DEBUG            = False
 
 # Default values
 PAGE_WIDTH       = 1920.0

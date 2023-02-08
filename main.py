@@ -80,8 +80,8 @@ class Window(QMainWindow):
         read_file(self, file_path[0])
 
     def reset_indexes(self):
-        os.remove('pickled_fonts.pkl')
-        os.remove('pickled_paths.pkl')
+        os.remove(f'{cur_path}/pickled_fonts.pkl')
+        os.remove(f'{cur_path}/pickled_paths.pkl')
 
     def help_action(self):
         webbrowser.open('https://github.com/CarlJKurtz/smart-grids', new=2)
