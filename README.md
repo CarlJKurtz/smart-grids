@@ -26,7 +26,7 @@ This requires you to have python3 and the required packages installed. (See [Req
 On Windows, you need to download the source code and run the ```main.py``` file via python. This requires the same packages to be installed. (See [Required packages](#Required-packages))
 *Note:* SmartGrids is primarily developed for MacOS. Therefore not all features might be available on windows at this point.
 
-### Compile SmartGrids from source:
+### Build SmartGrids from source:
 SmartGrids is compiled with the module _pyinstaller_. To compile it from source, install the required packages (see [Required packages](#Required-packages)) and pyinstaller with ```$ pip install pyinstaller```.
 Then run ```build.py``` with python. An app-file will be created inside the new _dist_ folder.
 
@@ -45,13 +45,15 @@ SmartGrids does not currently support automatic unit conversion as we know it fr
 
 <a id="Required-packages"></a>
 ## Required packages
-All packages may be installed via ```pip3``` in the terminal.
+To install the required packages, navigate into the smart-grids directory and execute the following command in the terminal:
 
-````$ pip install package````
+```$ cd [path to directory]```
 
-- [PIL](https://pypi.org/project/Pillow/)
-- [FontTools](https://pypi.org/project/fonttools/)
-- [PyQt5](https://pypi.org/project/PyQt5/)
+```$ pip install -r requirements.txt```
+
+This will install all libraries that you need to compile SmartGrids. If you want to build the app yourself you need to also install PyInstaller:
+
+```$ pip install pyinstaller```
 
 # About
 ### Support
