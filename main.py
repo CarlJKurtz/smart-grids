@@ -11,7 +11,8 @@ from splashscreen import *
 import webbrowser
 from file_handler import *
 from sys import platform
-from unit_conversion_spinbox import Unit_Spinbox
+from unitlineedit import UnitLineEdit
+from unitlabel import UnitLabel
 
 # Adds title to MenuBar on OSX
 try:
@@ -30,7 +31,7 @@ class Window(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.unit = 'pt'
+        self.unit = 'mm'
         self.dpi = 300
         self.setWindowTitle(f"{APP_TITLE} | {APP_VERSION}")
         self.setGeometry(100, 100, 1000, 400)
@@ -125,28 +126,28 @@ class Window(QMainWindow):
         left_column.addWidget(page_config_group, 2)
         page_config_group.setLayout(page_config)
 
-        self.page_width_spinbox = Unit_Spinbox(parent=self, unit='mm', value=PAGE_WIDTH)
+        self.page_width_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=PAGE_WIDTH)
         #self.page_width_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Page width:", self.page_width_spinbox)
 
-        self.page_height_spinbox = Unit_Spinbox(parent=self, unit='mm', value=PAGE_HEIGHT)
+        self.page_height_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=PAGE_HEIGHT)
         self.page_height_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Page height:", self.page_height_spinbox)
 
-        self.top_margin_spinbox = QDoubleSpinBox(maximum=100000, value=TOP_MARGIN)
+        self.top_margin_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=TOP_MARGIN)
         self.top_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Top margin:", self.top_margin_spinbox)
 
 
-        self.bottom_margin_spinbox = QDoubleSpinBox(maximum=100000, value=BOTTOM_MARGIN)
+        self.bottom_margin_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=BOTTOM_MARGIN)
         self.bottom_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Bottom margin:", self.bottom_margin_spinbox)
 
-        self.left_margin_spinbox = QDoubleSpinBox(maximum=100000, value=LEFT_MARGIN)
+        self.left_margin_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=LEFT_MARGIN)
         self.left_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Left margin:", self.left_margin_spinbox)
 
-        self.right_margin_spinbox = QDoubleSpinBox(maximum=100000, value=RIGHT_MARGIN)
+        self.right_margin_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=RIGHT_MARGIN)
         self.right_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Right margin:", self.right_margin_spinbox)
 
@@ -160,11 +161,11 @@ class Window(QMainWindow):
         self.font_dropdown.currentTextChanged.connect(self.update)
         type_config.addRow("Font:", self.font_dropdown)
 
-        self.font_size_spinbox = QDoubleSpinBox(suffix = " pt", maximum=100000, value=FONT_SIZE)
+        self.font_size_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=FONT_SIZE)
         self.font_size_spinbox.valueChanged.connect(self.update)
         type_config.addRow("Font size:", self.font_size_spinbox)
 
-        self.leading_spinbox = QDoubleSpinBox(suffix = " pt", maximum=100000, minimum=0.01, value=LEADING)
+        self.leading_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, minimum=0.01, value=LEADING)
         self.leading_spinbox.valueChanged.connect(self.update)
         type_config.addRow("Leading:", self.leading_spinbox)
 
@@ -188,7 +189,7 @@ class Window(QMainWindow):
         self.use_custom_gutter_checkbox.stateChanged.connect(self.update)
         grid_config.addRow("Custom column gutter:", self.use_custom_gutter_checkbox)
 
-        self.custom_gutter_spinbox = QDoubleSpinBox(value=GUTTER)
+        self.custom_gutter_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=GUTTER)
         self.custom_gutter_spinbox.editingFinished.connect(self.update)
         grid_config.addRow("Gutter:", self.custom_gutter_spinbox)
 
@@ -196,16 +197,16 @@ class Window(QMainWindow):
         self.show_baseline_grid_checkbox.stateChanged.connect(self.update)
         grid_config.addRow("Show baseline grid:", self.show_baseline_grid_checkbox)
 
-        self.grid_start_position_value = QLabel(str(get_grid_start_position(self)))
+        self.grid_start_position_value = UnitLabel(unit=self.unit, text=str(round(get_grid_start_position(self), 3)))
         output_layout.addRow("Grid start position:", self.grid_start_position_value)
 
-        self.baseline_shift_value = QLabel("0")
+        self.baseline_shift_value = UnitLabel(unit=self.unit, text='0')
         output_layout.addRow("Baseline shift:", self.baseline_shift_value)
 
         self.possible_lines_value = QLabel(str(get_possible_lines(self)))
         output_layout.addRow("Total lines:", self.possible_lines_value)
 
-        self.gutter_value = QLabel(str(round(gutter(self), 5)))
+        self.gutter_value = UnitLabel(unit=self.unit, text=str(round(gutter(self), 3)))
         output_layout.addRow("Row gutter:", self.gutter_value)
 
         self.lines_per_cell_value = QLabel(str(lines_in_cell(self)))
@@ -214,22 +215,22 @@ class Window(QMainWindow):
         self.possible_divisions_value = QLabel("None")
         output_layout.addRow("Possible divisions:", self.possible_divisions_value)
 
-        self.corrected_bottom_margin_value = QLabel(str(round(corrected_bottom_margin(self), 5)))
+        self.corrected_bottom_margin_value = UnitLabel(unit=self.unit, text=str(round(corrected_bottom_margin(self), 3)))
         output_layout.addRow("Corrected bottom margin:", self.corrected_bottom_margin_value)
 
-        self.text_area_height_value = QLabel(str(corrected_text_area_height(self)))
+        self.text_area_height_value = UnitLabel(unit=self.unit, text=str(round(get_text_area_height(self), 3)))
         output_layout.addRow("Corrected text area height:", self.text_area_height_value)
 
-        self.ascender_value = QLabel(str(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
+        self.ascender_value = UnitLabel(unit=self.unit, text=str(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("Ascender:", self.ascender_value)
 
-        self.cap_height_value = QLabel(str(get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
+        self.cap_height_value = UnitLabel(unit=self.unit, text=str(get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("Cap-height:", self.cap_height_value)
 
-        self.x_height_value = QLabel(
-            str(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
+        self.x_height_value = UnitLabel(unit=self.unit, text=str(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("x-height:", self.x_height_value)
-        self.descender_value = QLabel(str(round(font_functions.get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
+
+        self.descender_value = UnitLabel(unit=self.unit, text=str(get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("Descender:", self.descender_value)
 
         vertical_alignment_group = QGroupBox("Vertical alignment")
@@ -322,27 +323,26 @@ class Window(QMainWindow):
         self.column_gutter = self.update_column_gutter_value()
         draw_page(self)
         self.display_possible_divisions()
-        self.text_area_height_value.setText(str(round(get_text_area_height(self), 3)))
-        self.cap_height_value.setText(str(round(font_functions.get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
-        self.ascender_value.setText(
-            str(round(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()),
-                      3)))
-        self.x_height_value.setText(str(round(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
-        self.grid_start_position_value.setText(str(round(get_grid_start_position(self), 5)))
+        self.text_area_height_value.update(get_text_area_height(self))
+        self.cap_height_value.update(font_functions.get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()))
+        self.ascender_value.update(round(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3))
+        self.x_height_value.update(round(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3))
+        self.grid_start_position_value.update(round(get_grid_start_position(self), 5))
         self.possible_lines_value.setText(str(round(get_possible_lines(self), 3)))
-        self.corrected_bottom_margin_value.setText(str(round(corrected_bottom_margin(self), 3)))
-        self.gutter_value.setText(str(round(gutter(self), 5)))
+        self.corrected_bottom_margin_value.update(corrected_bottom_margin(self))
+        self.gutter_value.update(round(gutter(self), 5))
         self.lines_per_cell_value.setText(str(lines_in_cell(self)))
-        self.descender_value.setText(str(round(font_functions.get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
-        self.baseline_shift_value.setText(str(round(self.bottom_alignment_value, 3)))
-        self.text_area_height_value.setText(str(corrected_text_area_height(self)))
+        self.descender_value.update(round(font_functions.get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3))
+        self.baseline_shift_value.update(round(self.bottom_alignment_value, 3))
+        self.text_area_height_value.update(corrected_text_area_height(self))
 
         self.update_canvas_size()
 
     def throw_error(self, message):
-        msg = QErrorMessage()
-        msg.setWindowTitle("Error!")
-        msg.showMessage(message)
+        msg = QMessageBox()
+        msg.setWindowTitle(APP_TITLE)
+        msg.setText(message)
+        msg.setIcon(QMessageBox.Warning)
 
         msg.exec_()
 

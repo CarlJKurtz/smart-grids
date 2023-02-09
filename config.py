@@ -17,8 +17,8 @@ FILE_TYPE        = '.grid'
 DEBUG            = False
 
 # Default values
-PAGE_WIDTH       = 210.0
-PAGE_HEIGHT      = 297.0
+PAGE_WIDTH       = 210
+PAGE_HEIGHT      = 210
 TOP_MARGIN       = 10.0
 BOTTOM_MARGIN    = 20.0
 LEFT_MARGIN      = 10.0
@@ -38,7 +38,7 @@ GUTTER           = 50
 # All paths which don't contain fontfiles or do not exist will be ignored
 
 FONT_DIRECTORIES = [
-        #os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r"),
+        os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r"),
         #os.path.join(home_path, "Library/Fonts"),
         os.path.join("/Library/Application Support/Adobe/Fonts"),
         #"/System/Library/Fonts",

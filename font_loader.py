@@ -44,8 +44,8 @@ class Font:
         # returns cap_height at 1pt
     def cap_height(self):
         try:
-            font = ImageFont.truetype(self.path, 1000, encoding="utf-8")
-            cap_height = (-font.getbbox('E', anchor="ls")[1] / 1000)
+            font = ImageFont.truetype(self.path, 10000, encoding="utf-8")
+            cap_height = (-font.getbbox('E', anchor="ls")[1] / 10000)
 
             return cap_height
         except:
@@ -53,8 +53,8 @@ class Font:
 
     def x_height(self) -> float:
         try:
-            font = ImageFont.truetype(self.path, 1000, encoding="utf-8")
-            x_height = (-font.getbbox('x', anchor="ls")[1] / 1000)
+            font = ImageFont.truetype(self.path, 10000, encoding="utf-8")
+            x_height = (-font.getbbox('x', anchor="ls")[1] / 10000)
 
             return x_height
         except:
@@ -62,8 +62,8 @@ class Font:
 
     def ascender(self) -> float:
         try:
-            font = ImageFont.truetype(self.path, 1000, encoding="utf-8")
-            ascender = (-font.getbbox('h', anchor="ls")[1] / 1000)
+            font = ImageFont.truetype(self.path, 10000, encoding="utf-8")
+            ascender = (-font.getbbox('h', anchor="ls")[1] / 10000)
 
             return ascender
         except:
@@ -71,9 +71,9 @@ class Font:
 
     def descender(self) -> float:
         try:
-            font = ImageFont.truetype(self.path, 1000, encoding="utf-8")
-            height_baseline_p = (-font.getbbox('p', anchor="ls")[1] / 1000)
-            height_p = (-font.getbbox('p', anchor="lb")[1] / 1000)
+            font = ImageFont.truetype(self.path, 10000, encoding="utf-8")
+            height_baseline_p = (-font.getbbox('p', anchor="ls")[1] / 10000)
+            height_p = (-font.getbbox('p', anchor="lb")[1] / 10000)
             descender = height_p - height_baseline_p
 
             return descender
