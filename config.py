@@ -17,18 +17,18 @@ FILE_TYPE        = '.grid'
 DEBUG            = False
 
 # Default values
-PAGE_WIDTH       = 1920.0
-PAGE_HEIGHT      = 1080.0
-TOP_MARGIN       = 50.0
-BOTTOM_MARGIN    = 75.0
-LEFT_MARGIN      = 100.0
-RIGHT_MARGIN     = 30.0
+PAGE_WIDTH       = 210.0
+PAGE_HEIGHT      = 297.0
+TOP_MARGIN       = 10.0
+BOTTOM_MARGIN    = 20.0
+LEFT_MARGIN      = 10.0
+RIGHT_MARGIN     = 10.0
 
-FONT_SIZE        = 24.0
-LEADING          = 27.0
+FONT_SIZE        = 10.0
+LEADING          = 12.0
 CAP_HEIGHT       = 1.5
 
-ROWS             = 6
+ROWS             = 8
 LINES_IN_GUTTER  = 1
 COLUMNS          = 9
 GUTTER           = 50
@@ -38,11 +38,11 @@ GUTTER           = 50
 # All paths which don't contain fontfiles or do not exist will be ignored
 
 FONT_DIRECTORIES = [
-        os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r"),
-        os.path.join(home_path, "Library/Fonts"),
+        #os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r"),
+        #os.path.join(home_path, "Library/Fonts"),
         os.path.join("/Library/Application Support/Adobe/Fonts"),
-        "/System/Library/Fonts",
-        os.path.join(home_path, 'Windows\Fonts'),
-        os.path.join(home_path, 'AppData\Roaming\Adobe\CoreSync\plugins\livetype\r'),
+        #"/System/Library/Fonts",
+        #os.path.join(home_path, 'Windows\Fonts'),
+        #os.path.join(home_path, 'AppData\Roaming\Adobe\CoreSync\plugins\livetype\r'),
 
     ]

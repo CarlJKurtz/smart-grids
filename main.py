@@ -1,5 +1,6 @@
 import sys
 from font_functions import *
+from threading import Timer
 from font_loader import *
 from draw_functions import *
 from grid_functions import *
@@ -10,6 +11,7 @@ from splashscreen import *
 import webbrowser
 from file_handler import *
 from sys import platform
+from unit_conversion_spinbox import Unit_Spinbox
 
 # Adds title to MenuBar on OSX
 try:
@@ -28,6 +30,8 @@ class Window(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.unit = 'pt'
+        self.dpi = 300
         self.setWindowTitle(f"{APP_TITLE} | {APP_VERSION}")
         self.setGeometry(100, 100, 1000, 400)
         self.main_widget = QWidget()
@@ -121,29 +125,29 @@ class Window(QMainWindow):
         left_column.addWidget(page_config_group, 2)
         page_config_group.setLayout(page_config)
 
-        self.page_width_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=PAGE_WIDTH)
-        self.page_width_spinbox.valueChanged.connect(self.update)
+        self.page_width_spinbox = Unit_Spinbox(parent=self, unit='mm', value=PAGE_WIDTH)
+        #self.page_width_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Page width:", self.page_width_spinbox)
 
-        self.page_height_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=PAGE_HEIGHT)
-        self.page_height_spinbox.valueChanged.connect(self.update)
+        self.page_height_spinbox = Unit_Spinbox(parent=self, unit='mm', value=PAGE_HEIGHT)
+        self.page_height_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Page height:", self.page_height_spinbox)
 
-        self.top_margin_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=TOP_MARGIN)
-        self.top_margin_spinbox.valueChanged.connect(self.update)
-        page_config.addRow("Top margin", self.top_margin_spinbox)
+        self.top_margin_spinbox = QDoubleSpinBox(maximum=100000, value=TOP_MARGIN)
+        self.top_margin_spinbox.editingFinished.connect(self.update)
+        page_config.addRow("Top margin:", self.top_margin_spinbox)
 
 
-        self.bottom_margin_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=BOTTOM_MARGIN)
-        self.bottom_margin_spinbox.valueChanged.connect(self.update)
+        self.bottom_margin_spinbox = QDoubleSpinBox(maximum=100000, value=BOTTOM_MARGIN)
+        self.bottom_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Bottom margin:", self.bottom_margin_spinbox)
 
-        self.left_margin_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=LEFT_MARGIN)
-        self.left_margin_spinbox.valueChanged.connect(self.update)
+        self.left_margin_spinbox = QDoubleSpinBox(maximum=100000, value=LEFT_MARGIN)
+        self.left_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Left margin:", self.left_margin_spinbox)
 
-        self.right_margin_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=RIGHT_MARGIN)
-        self.right_margin_spinbox.valueChanged.connect(self.update)
+        self.right_margin_spinbox = QDoubleSpinBox(maximum=100000, value=RIGHT_MARGIN)
+        self.right_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Right margin:", self.right_margin_spinbox)
 
         type_config_group = QGroupBox("Type Configuration")
@@ -184,8 +188,8 @@ class Window(QMainWindow):
         self.use_custom_gutter_checkbox.stateChanged.connect(self.update)
         grid_config.addRow("Custom column gutter:", self.use_custom_gutter_checkbox)
 
-        self.custom_gutter_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=GUTTER)
-        self.custom_gutter_spinbox.valueChanged.connect(self.update)
+        self.custom_gutter_spinbox = QDoubleSpinBox(value=GUTTER)
+        self.custom_gutter_spinbox.editingFinished.connect(self.update)
         grid_config.addRow("Gutter:", self.custom_gutter_spinbox)
 
         self.show_baseline_grid_checkbox = QCheckBox()
@@ -201,7 +205,7 @@ class Window(QMainWindow):
         self.possible_lines_value = QLabel(str(get_possible_lines(self)))
         output_layout.addRow("Total lines:", self.possible_lines_value)
 
-        self.gutter_value = QLabel(str(round(gutter(self), 3)))
+        self.gutter_value = QLabel(str(round(gutter(self), 5)))
         output_layout.addRow("Row gutter:", self.gutter_value)
 
         self.lines_per_cell_value = QLabel(str(lines_in_cell(self)))
@@ -210,11 +214,11 @@ class Window(QMainWindow):
         self.possible_divisions_value = QLabel("None")
         output_layout.addRow("Possible divisions:", self.possible_divisions_value)
 
-        self.corrected_bottom_margin_value = QLabel(str(round(corrected_bottom_margin(self), 3)))
+        self.corrected_bottom_margin_value = QLabel(str(round(corrected_bottom_margin(self), 5)))
         output_layout.addRow("Corrected bottom margin:", self.corrected_bottom_margin_value)
 
-        self.text_area_height_value = QLabel(str(get_text_area_height(self)))
-        output_layout.addRow("Text area height:", self.text_area_height_value)
+        self.text_area_height_value = QLabel(str(corrected_text_area_height(self)))
+        output_layout.addRow("Corrected text area height:", self.text_area_height_value)
 
         self.ascender_value = QLabel(str(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("Ascender:", self.ascender_value)
@@ -324,13 +328,14 @@ class Window(QMainWindow):
             str(round(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()),
                       3)))
         self.x_height_value.setText(str(round(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
-        self.grid_start_position_value.setText(str(round(get_grid_start_position(self), 3)))
+        self.grid_start_position_value.setText(str(round(get_grid_start_position(self), 5)))
         self.possible_lines_value.setText(str(round(get_possible_lines(self), 3)))
         self.corrected_bottom_margin_value.setText(str(round(corrected_bottom_margin(self), 3)))
-        self.gutter_value.setText(str(round(gutter(self), 3)))
+        self.gutter_value.setText(str(round(gutter(self), 5)))
         self.lines_per_cell_value.setText(str(lines_in_cell(self)))
         self.descender_value.setText(str(round(font_functions.get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3)))
         self.baseline_shift_value.setText(str(round(self.bottom_alignment_value, 3)))
+        self.text_area_height_value.setText(str(corrected_text_area_height(self)))
 
         self.update_canvas_size()
 
