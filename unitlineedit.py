@@ -5,7 +5,7 @@ import re
 
 
 class UnitLineEdit(QLineEdit):
-    accepted_units = ['mm', 'px', 'pt', 'in']
+    accepted_units = ['mm', 'px', 'pt', 'in', 'cm']
     unit = 'pt'
     upPressed = QtCore.pyqtSignal
     downPressed = QtCore.pyqtSignal
@@ -25,14 +25,14 @@ class UnitLineEdit(QLineEdit):
     def keyPressEvent(self, event):
         super().keyPressEvent(event)
         if event.key() == QtCore.Qt.Key_Up:
-            self.stored_value = self.stored_value + convert(1, UnitLineEdit.unit, 'pt')
-            display_value = round(convert(self.stored_value, 'pt', UnitLineEdit.unit), 3)
+            self.stored_value = self.stored_value + convert(1, UnitLineEdit.unit, 'pt', self.parent.dpi)
+            display_value = round(convert(self.stored_value, 'pt', UnitLineEdit.unit, self.parent.dpi), 3)
             self.setText(f'{display_value} {UnitLineEdit.unit}')
             self.parent.update()
 
         elif event.key() == QtCore.Qt.Key_Down:
-            self.stored_value = self.stored_value - convert(1, UnitLineEdit.unit, 'pt')
-            display_value = round(convert(self.stored_value, 'pt', UnitLineEdit.unit), 3)
+            self.stored_value = self.stored_value - convert(1, UnitLineEdit.unit, 'pt', self.parent.dpi)
+            display_value = round(convert(self.stored_value, 'pt', UnitLineEdit.unit, self.parent.dpi), 3)
             self.setText(f'{display_value} {UnitLineEdit.unit}')
             self.parent.update()
 
@@ -45,7 +45,7 @@ class UnitLineEdit(QLineEdit):
             display_value = round(value, 3)
             self.setText(f'{display_value} pt')
         else:
-            display_value = round(convert(self.stored_value, 'pt', UnitLineEdit.unit), 3)
+            display_value = round(convert(self.stored_value, 'pt', UnitLineEdit.unit, self.parent.dpi), 3)
             self.setText(f'{display_value} {UnitLineEdit.unit}')
 
     def update(self):

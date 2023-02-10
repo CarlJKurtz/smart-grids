@@ -1,6 +1,3 @@
-import sys
-from font_functions import *
-from threading import Timer
 from font_loader import *
 from draw_functions import *
 from grid_functions import *
@@ -24,8 +21,10 @@ try:
             info = bundle.localizedInfoDictionary() or bundle.infoDictionary()
             if info and info['CFBundleName'] == 'Python':
                 info['CFBundleName'] = APP_TITLE
+
 except ModuleNotFoundError:
     print(f'{Colors.FAIL}[!]{Colors.ENDC} Module foundation is missing. This can happen in brew environments.')
+
 
 class Window(QMainWindow):
     resized = pyqtSignal()
@@ -37,6 +36,7 @@ class Window(QMainWindow):
         self.setGeometry(100, 100, 1000, 400)
         self.main_widget = QWidget()
         self.setCentralWidget(self.main_widget)
+        self.splash = SplashScreen()
         self.show_splash()
         self.init_menu()
         self.font_dict = create_font_dict()
@@ -45,9 +45,10 @@ class Window(QMainWindow):
         self.init_ui()
         self.resized.connect(self.update)
         self.column_gutter = self.update_column_gutter_value()
+        self.window = Settings(self)
+        self.change_unit(UNIT)
 
     def open_settings(self):
-        self.window = Settings(self)
         self.window.show()
 
     def change_unit(self, new_unit):
@@ -62,12 +63,11 @@ class Window(QMainWindow):
         self.right_margin_spinbox.update()
         self.custom_gutter_spinbox.update()
 
-
     def init_menu(self):
-        menuBar = self.menuBar()
-        edit_menu = menuBar.addMenu(' &Edit')
-        file_menu = menuBar.addMenu(' &File')
-        help_menu = menuBar.addMenu(' &Help')
+        menu_bar = self.menuBar()
+        edit_menu = menu_bar.addMenu(' &Edit')
+        file_menu = menu_bar.addMenu(' &File')
+        help_menu = menu_bar.addMenu(' &Help')
 
         settings_action = QAction(' Preferences', self)
         settings_action.triggered.connect(self.open_settings)
@@ -76,7 +76,7 @@ class Window(QMainWindow):
         reset_index_action = QAction(' Clear font index', self)
         reset_index_action.triggered.connect(self.reset_indexes)
         reset_index_action.setStatusTip('Resets the indexed fonts (Restarting the application is required)')
-        help_menu.addAction(reset_index_action)
+        edit_menu.addAction(reset_index_action)
 
         about_action = QAction(f' About {APP_TITLE}', self)
         about_action.triggered.connect(self.show_splash)
@@ -106,11 +106,13 @@ class Window(QMainWindow):
         file_path = QFileDialog.getOpenFileName(self, 'Open File')
         read_file(self, file_path[0])
 
-    def reset_indexes(self):
+    @staticmethod
+    def reset_indexes():
         os.remove(f'{cur_path}/pickled_fonts.pkl')
         os.remove(f'{cur_path}/pickled_paths.pkl')
 
-    def help_action(self):
+    @staticmethod
+    def help_action():
         webbrowser.open('https://github.com/CarlJKurtz/smart-grids', new=2)
 
     def resizeEvent(self, event):
@@ -149,28 +151,22 @@ class Window(QMainWindow):
         page_config_group.setLayout(page_config)
 
         self.page_width_spinbox = UnitLineEdit(parent=self, value=PAGE_WIDTH)
-        #self.page_width_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Page width:", self.page_width_spinbox)
 
         self.page_height_spinbox = UnitLineEdit(parent=self, value=PAGE_HEIGHT)
-        self.page_height_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Page height:", self.page_height_spinbox)
 
         self.top_margin_spinbox = UnitLineEdit(parent=self, value=TOP_MARGIN)
-        self.top_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Top margin:", self.top_margin_spinbox)
 
 
         self.bottom_margin_spinbox = UnitLineEdit(parent=self, value=BOTTOM_MARGIN)
-        self.bottom_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Bottom margin:", self.bottom_margin_spinbox)
 
         self.left_margin_spinbox = UnitLineEdit(parent=self, value=LEFT_MARGIN)
-        self.left_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Left margin:", self.left_margin_spinbox)
 
         self.right_margin_spinbox = UnitLineEdit(parent=self, value=RIGHT_MARGIN)
-        self.right_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Right margin:", self.right_margin_spinbox)
 
         type_config_group = QGroupBox("Type Configuration")
@@ -212,12 +208,14 @@ class Window(QMainWindow):
         grid_config.addRow("Custom column gutter:", self.use_custom_gutter_checkbox)
 
         self.custom_gutter_spinbox = UnitLineEdit(parent=self, value=GUTTER)
-        self.custom_gutter_spinbox.editingFinished.connect(self.update)
         grid_config.addRow("Gutter:", self.custom_gutter_spinbox)
 
         self.show_baseline_grid_checkbox = QCheckBox()
         self.show_baseline_grid_checkbox.stateChanged.connect(self.update)
         grid_config.addRow("Show baseline grid:", self.show_baseline_grid_checkbox)
+
+        self.resolution_output = QLabel(f'{self.dpi} dpi')
+        output_layout.addRow("Document resolution:", self.resolution_output)
 
         self.grid_start_position_value = UnitLabel(parent=self, text=str(round(get_grid_start_position(self), 3)))
         output_layout.addRow("Grid start position:", self.grid_start_position_value)
@@ -357,16 +355,16 @@ class Window(QMainWindow):
 
         self.update_canvas_size()
 
-    def throw_error(self, message):
+    @staticmethod
+    def throw_error(message, icon=QMessageBox.Warning):
         msg = QMessageBox()
         msg.setWindowTitle(APP_TITLE)
         msg.setText(message)
-        msg.setIcon(QMessageBox.Warning)
+        msg.setIcon(icon)
 
         msg.exec_()
 
     def show_splash(self):
-        self.splash = SplashScreen()
         self.splash.show()
 
 

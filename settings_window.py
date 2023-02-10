@@ -15,7 +15,7 @@ class Settings(QWidget):
         # create a tab widget
         tab = QTabWidget(self)
 
-        unit_list = ['pt', 'mm', 'in', 'px']
+        unit_list = ['pt', 'mm', 'in', 'px', 'cm']
 
         # personal page
         unit_tab = QWidget(self)
@@ -62,3 +62,4 @@ class Settings(QWidget):
 
     def change_dpi(self):
         self.parent.dpi = self.dpi_spinbox.value()
+        self.parent.resolution_output.setText(f'{self.parent.dpi} dpi')
