@@ -2,14 +2,15 @@ from PyQt5.QtWidgets import QLabel
 from unit_conversion import convert
 
 class UnitLabel(QLabel):
-    def __init__(self, unit, *args, **kwargs):
+    unit = 'pt'
+    def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.unit = unit
+        self.parent = parent
 
     def update(self, value):
         display_value = round(value, 3)
-        if self.unit == 'pt':
+        if UnitLabel.unit == 'pt':
             self.setText(f'{display_value} pt')
         else:
-            display_value = round(convert(value, 'pt', self.unit), 3)
-            self.setText(f'{display_value} {self.unit}')
+            display_value = round(convert(value, 'pt', UnitLabel.unit, self.parent.dpi), 3)
+            self.setText(f'{display_value} {UnitLabel.unit}')

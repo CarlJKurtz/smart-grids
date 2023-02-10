@@ -5,35 +5,35 @@ import re
 
 
 class UnitLineEdit(QLineEdit):
-    accepted_units = ['mm', 'px', 'pt']
+    accepted_units = ['mm', 'px', 'pt', 'in']
+    unit = 'pt'
     upPressed = QtCore.pyqtSignal
     downPressed = QtCore.pyqtSignal
 
-    def __init__(self, parent, unit, value, *args, **kwargs):
+    def __init__(self, parent, value, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.parent = parent
         self.stored_value = float(value)  # This will always be in pt
-        self.unit = unit
         self.editingFinished.connect(self.update)
 
-        if self.unit == 'pt':
+        if UnitLineEdit.unit == 'pt':
             self.setText(f'{self.stored_value} pt')
         else:
-            display_text = str(round(convert(self.stored_value, 'pt', self.unit), 3))
-            self.setText(f'{display_text} {self.unit}')
+            display_text = str(round(convert(self.stored_value, 'pt', UnitLineEdit.unit, self.parent.dpi), 3))
+            self.setText(f'{display_text} {UnitLineEdit.unit}')
 
     def keyPressEvent(self, event):
         super().keyPressEvent(event)
         if event.key() == QtCore.Qt.Key_Up:
-            self.stored_value = self.stored_value + convert(1, self.unit, 'pt')
-            display_value = round(convert(self.stored_value, 'pt', self.unit), 3)
-            self.setText(f'{display_value} {self.unit}')
+            self.stored_value = self.stored_value + convert(1, UnitLineEdit.unit, 'pt')
+            display_value = round(convert(self.stored_value, 'pt', UnitLineEdit.unit), 3)
+            self.setText(f'{display_value} {UnitLineEdit.unit}')
             self.parent.update()
 
         elif event.key() == QtCore.Qt.Key_Down:
-            self.stored_value = self.stored_value - convert(1, self.unit, 'pt')
-            display_value = round(convert(self.stored_value, 'pt', self.unit), 3)
-            self.setText(f'{display_value} {self.unit}')
+            self.stored_value = self.stored_value - convert(1, UnitLineEdit.unit, 'pt')
+            display_value = round(convert(self.stored_value, 'pt', UnitLineEdit.unit), 3)
+            self.setText(f'{display_value} {UnitLineEdit.unit}')
             self.parent.update()
 
     def value(self) -> float:
@@ -41,12 +41,12 @@ class UnitLineEdit(QLineEdit):
 
     def setValue(self, value):
         self.stored_value = value
-        if self.unit == 'pt':
+        if UnitLineEdit.unit == 'pt':
             display_value = round(value, 3)
             self.setText(f'{display_value} pt')
         else:
-            display_value = round(convert(self.stored_value, 'pt', self.unit), 3)
-            self.setText(f'{display_value} {self.unit}')
+            display_value = round(convert(self.stored_value, 'pt', UnitLineEdit.unit), 3)
+            self.setText(f'{display_value} {UnitLineEdit.unit}')
 
     def update(self):
         validation = self.validate_input()
@@ -56,12 +56,12 @@ class UnitLineEdit(QLineEdit):
         if entered_unit == 'pt':
             self.stored_value = value
         else:
-            self.stored_value = convert(value, entered_unit, 'pt')
+            self.stored_value = convert(value, entered_unit, 'pt', self.parent.dpi)
 
-        if entered_unit == self.unit:
-            self.setText(f'{value} {self.unit}')
+        if entered_unit == UnitLineEdit.unit:
+            self.setText(f'{value} {UnitLineEdit.unit}')
         else:
-            self.setText(f'{round(convert(value, entered_unit, self.unit), 3)} {self.unit}')
+            self.setText(f'{round(convert(value, entered_unit, UnitLineEdit.unit, self.parent.dpi), 3)} {UnitLineEdit.unit}')
 
         self.parent.update()
 
@@ -73,7 +73,7 @@ class UnitLineEdit(QLineEdit):
             if input_text[-2:] in UnitLineEdit.accepted_units:
                 unit = input_text[-2:]
             else:
-                unit = self.unit
+                unit = UnitLineEdit.unit
 
             r = re.compile('[^\d\$\.]')
             value = float(r.sub('', input_text))

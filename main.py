@@ -13,6 +13,7 @@ from file_handler import *
 from sys import platform
 from unitlineedit import UnitLineEdit
 from unitlabel import UnitLabel
+from settings_window import Settings
 
 # Adds title to MenuBar on OSX
 try:
@@ -31,7 +32,6 @@ class Window(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.unit = 'mm'
         self.dpi = 300
         self.setWindowTitle(f"{APP_TITLE} | {APP_VERSION}")
         self.setGeometry(100, 100, 1000, 400)
@@ -46,10 +46,32 @@ class Window(QMainWindow):
         self.resized.connect(self.update)
         self.column_gutter = self.update_column_gutter_value()
 
+    def open_settings(self):
+        self.window = Settings(self)
+        self.window.show()
+
+    def change_unit(self, new_unit):
+        UnitLabel.unit = new_unit
+        UnitLineEdit.unit = new_unit
+
+        self.page_width_spinbox.update()
+        self.page_height_spinbox.update()
+        self.top_margin_spinbox.update()
+        self.bottom_margin_spinbox.update()
+        self.left_margin_spinbox.update()
+        self.right_margin_spinbox.update()
+        self.custom_gutter_spinbox.update()
+
+
     def init_menu(self):
         menuBar = self.menuBar()
+        edit_menu = menuBar.addMenu(' &Edit')
         file_menu = menuBar.addMenu(' &File')
         help_menu = menuBar.addMenu(' &Help')
+
+        settings_action = QAction(' Preferences', self)
+        settings_action.triggered.connect(self.open_settings)
+        edit_menu.addAction(settings_action)
 
         reset_index_action = QAction(' Clear font index', self)
         reset_index_action.triggered.connect(self.reset_indexes)
@@ -126,28 +148,28 @@ class Window(QMainWindow):
         left_column.addWidget(page_config_group, 2)
         page_config_group.setLayout(page_config)
 
-        self.page_width_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=PAGE_WIDTH)
+        self.page_width_spinbox = UnitLineEdit(parent=self, value=PAGE_WIDTH)
         #self.page_width_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Page width:", self.page_width_spinbox)
 
-        self.page_height_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=PAGE_HEIGHT)
+        self.page_height_spinbox = UnitLineEdit(parent=self, value=PAGE_HEIGHT)
         self.page_height_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Page height:", self.page_height_spinbox)
 
-        self.top_margin_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=TOP_MARGIN)
+        self.top_margin_spinbox = UnitLineEdit(parent=self, value=TOP_MARGIN)
         self.top_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Top margin:", self.top_margin_spinbox)
 
 
-        self.bottom_margin_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=BOTTOM_MARGIN)
+        self.bottom_margin_spinbox = UnitLineEdit(parent=self, value=BOTTOM_MARGIN)
         self.bottom_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Bottom margin:", self.bottom_margin_spinbox)
 
-        self.left_margin_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=LEFT_MARGIN)
+        self.left_margin_spinbox = UnitLineEdit(parent=self, value=LEFT_MARGIN)
         self.left_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Left margin:", self.left_margin_spinbox)
 
-        self.right_margin_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=RIGHT_MARGIN)
+        self.right_margin_spinbox = UnitLineEdit(parent=self, value=RIGHT_MARGIN)
         self.right_margin_spinbox.editingFinished.connect(self.update)
         page_config.addRow("Right margin:", self.right_margin_spinbox)
 
@@ -189,7 +211,7 @@ class Window(QMainWindow):
         self.use_custom_gutter_checkbox.stateChanged.connect(self.update)
         grid_config.addRow("Custom column gutter:", self.use_custom_gutter_checkbox)
 
-        self.custom_gutter_spinbox = UnitLineEdit(parent=self, unit=self.unit, value=GUTTER)
+        self.custom_gutter_spinbox = UnitLineEdit(parent=self, value=GUTTER)
         self.custom_gutter_spinbox.editingFinished.connect(self.update)
         grid_config.addRow("Gutter:", self.custom_gutter_spinbox)
 
@@ -197,16 +219,16 @@ class Window(QMainWindow):
         self.show_baseline_grid_checkbox.stateChanged.connect(self.update)
         grid_config.addRow("Show baseline grid:", self.show_baseline_grid_checkbox)
 
-        self.grid_start_position_value = UnitLabel(unit=self.unit, text=str(round(get_grid_start_position(self), 3)))
+        self.grid_start_position_value = UnitLabel(parent=self, text=str(round(get_grid_start_position(self), 3)))
         output_layout.addRow("Grid start position:", self.grid_start_position_value)
 
-        self.baseline_shift_value = UnitLabel(unit=self.unit, text='0')
+        self.baseline_shift_value = UnitLabel(text='0', parent=self)
         output_layout.addRow("Baseline shift:", self.baseline_shift_value)
 
         self.possible_lines_value = QLabel(str(get_possible_lines(self)))
         output_layout.addRow("Total lines:", self.possible_lines_value)
 
-        self.gutter_value = UnitLabel(unit=self.unit, text=str(round(gutter(self), 3)))
+        self.gutter_value = UnitLabel(parent=self, text=str(round(gutter(self), 3)))
         output_layout.addRow("Row gutter:", self.gutter_value)
 
         self.lines_per_cell_value = QLabel(str(lines_in_cell(self)))
@@ -215,22 +237,22 @@ class Window(QMainWindow):
         self.possible_divisions_value = QLabel("None")
         output_layout.addRow("Possible divisions:", self.possible_divisions_value)
 
-        self.corrected_bottom_margin_value = UnitLabel(unit=self.unit, text=str(round(corrected_bottom_margin(self), 3)))
+        self.corrected_bottom_margin_value = UnitLabel(parent=self, text=str(round(corrected_bottom_margin(self), 3)))
         output_layout.addRow("Corrected bottom margin:", self.corrected_bottom_margin_value)
 
-        self.text_area_height_value = UnitLabel(unit=self.unit, text=str(round(get_text_area_height(self), 3)))
+        self.text_area_height_value = UnitLabel(parent=self, text=str(round(get_text_area_height(self), 3)))
         output_layout.addRow("Corrected text area height:", self.text_area_height_value)
 
-        self.ascender_value = UnitLabel(unit=self.unit, text=str(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
+        self.ascender_value = UnitLabel(parent=self, text=str(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("Ascender:", self.ascender_value)
 
-        self.cap_height_value = UnitLabel(unit=self.unit, text=str(get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
+        self.cap_height_value = UnitLabel(parent=self, text=str(get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("Cap-height:", self.cap_height_value)
 
-        self.x_height_value = UnitLabel(unit=self.unit, text=str(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
+        self.x_height_value = UnitLabel(parent=self, text=str(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("x-height:", self.x_height_value)
 
-        self.descender_value = UnitLabel(unit=self.unit, text=str(get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
+        self.descender_value = UnitLabel(parent=self, text=str(get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
         output_layout.addRow("Descender:", self.descender_value)
 
         vertical_alignment_group = QGroupBox("Vertical alignment")
@@ -269,9 +291,6 @@ class Window(QMainWindow):
         output_group.setLayout(output_layout)
 
         self.resized.connect(self.update)
-
-    def preview(self):
-        self.update()
 
     def update_canvas_size(self):
         self.canvas_width = self.canvas_label.frameGeometry().width()
