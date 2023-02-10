@@ -99,8 +99,9 @@ class Window(QMainWindow):
         file_menu.addAction(saveFile)
 
     def file_save(self):
-        file_path = QFileDialog.getSaveFileName(self, 'Save File')
-        write_file(self, file_path[0])
+        file_path = QFileDialog.getSaveFileName(self, 'Save As')
+        if file_path:
+            write_file(self, file_path[0])
 
     def file_open(self):
         file_path = QFileDialog.getOpenFileName(self, 'Open File')
