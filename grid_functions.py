@@ -67,7 +67,6 @@ def dif_capheight_leading(window) -> float:
     return difference_leading_top_alignment
 
 
-
 def corrected_text_area_height(window) -> float:
     try:
         new_text_area_height = window.leading_spinbox.value() * math.floor(get_possible_lines(window)) - dif_capheight_leading(window) + window.bottom_alignment_value

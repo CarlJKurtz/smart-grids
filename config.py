@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 # Get correct path
@@ -11,37 +10,38 @@ else:
 
 home_path = str(Path.home())
 
-APP_TITLE        = "SmartGrids"
-APP_VERSION      = "1.3.0"
+APP_TITLE        = 'SmartGrids'
+APP_VERSION      = '1.3.0'
 FILE_TYPE        = '.grid'
-DEBUG            = False
+DEBUG            = True
 
-# Default values
-PAGE_WIDTH       = 1920.0
-PAGE_HEIGHT      = 1080.0
-TOP_MARGIN       = 50.0
-BOTTOM_MARGIN    = 75.0
-LEFT_MARGIN      = 100.0
-RIGHT_MARGIN     = 30.0
+# Default values in pt
+UNIT             = 'mm'  # Supported units: mm, pt, in, px, cm
+PAGE_WIDTH       = 595.276
+PAGE_HEIGHT      = 841.89
+TOP_MARGIN       = 56.693
+BOTTOM_MARGIN    = 170.079
+LEFT_MARGIN      = 141.732
+RIGHT_MARGIN     = 56.693
 
-FONT_SIZE        = 24.0
-LEADING          = 27.0
+FONT_SIZE        = 9
+LEADING          = 11.5
 CAP_HEIGHT       = 1.5
 
 ROWS             = 6
 LINES_IN_GUTTER  = 1
-COLUMNS          = 9
-GUTTER           = 50
+COLUMNS          = 5
+GUTTER           = 28.346
 
 # Font directories
 # To include new font into the dropdown list, add the path to the directory to the list
 # All paths which don't contain fontfiles or do not exist will be ignored
 
 FONT_DIRECTORIES = [
-        os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r"),
-        os.path.join(home_path, "Library/Fonts"),
-        os.path.join("/Library/Application Support/Adobe/Fonts"),
-        "/System/Library/Fonts",
+        os.path.join(home_path, 'Library/Application Support/Adobe/CoreSync/plugins/livetype/.r'),
+        os.path.join(home_path, 'Library/Fonts'),
+        os.path.join('/Library/Application Support/Adobe/Fonts'),
+        '/System/Library/Fonts',
         os.path.join(home_path, 'Windows\Fonts'),
         os.path.join(home_path, 'AppData\Roaming\Adobe\CoreSync\plugins\livetype\r'),
 

@@ -6,4 +6,4 @@ PyInstaller.__main__.run([
 
 ])
 
-subprocess.call(["sh", "./builddmg.sh"])
+subprocess.call(['sh', './builddmg.sh'])
