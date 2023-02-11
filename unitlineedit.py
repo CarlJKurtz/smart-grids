@@ -67,7 +67,7 @@ class UnitLineEdit(QLineEdit):
 
     def validate_input(self):
         try:
-            input_text = str(self.text()).replace(",", ".")
+            input_text = str(self.text()).replace(',', '.')
             input_text = input_text.replace(' ', '')
 
             if input_text[-2:] in UnitLineEdit.accepted_units:

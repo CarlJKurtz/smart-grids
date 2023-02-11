@@ -28,7 +28,7 @@ class SplashScreen(QSplashScreen):
         version_label = QLabel(f'v. {APP_VERSION}', self)
         version_label.setFont(QFont('Courier', 14))
         version_label.move(113, 75)
-        version_label.setStyleSheet("color: grey;")
+        version_label.setStyleSheet('color: grey;')
 
         copyright_label = QLabel(f'{APP_TITLE} was created by Carl J.  Kurtz in 2022\n'
                            f'It is maintained by him and the GitHub community.\n'
@@ -37,6 +37,6 @@ class SplashScreen(QSplashScreen):
                            f'Visit SmartGrids on GitHub.com for more information.', self)
         copyright_label.setFont(QFont('Default', 14))
         copyright_label.move(25, 140)
-        copyright_label.setStyleSheet("color: lightgrey;")
+        copyright_label.setStyleSheet('color: lightgrey;')
 
         QTimer.singleShot(10000, self.close)

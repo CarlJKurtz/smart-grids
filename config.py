@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 # Get correct path
@@ -11,8 +10,8 @@ else:
 
 home_path = str(Path.home())
 
-APP_TITLE        = "SmartGrids"
-APP_VERSION      = "1.3.0"
+APP_TITLE        = 'SmartGrids'
+APP_VERSION      = '1.3.0'
 FILE_TYPE        = '.grid'
 DEBUG            = True
 
@@ -39,10 +38,10 @@ GUTTER           = 28.346
 # All paths which don't contain fontfiles or do not exist will be ignored
 
 FONT_DIRECTORIES = [
-        os.path.join(home_path, "Library/Application Support/Adobe/CoreSync/plugins/livetype/.r"),
-        os.path.join(home_path, "Library/Fonts"),
-        os.path.join("/Library/Application Support/Adobe/Fonts"),
-        "/System/Library/Fonts",
+        os.path.join(home_path, 'Library/Application Support/Adobe/CoreSync/plugins/livetype/.r'),
+        os.path.join(home_path, 'Library/Fonts'),
+        os.path.join('/Library/Application Support/Adobe/Fonts'),
+        '/System/Library/Fonts',
         os.path.join(home_path, 'Windows\Fonts'),
         os.path.join(home_path, 'AppData\Roaming\Adobe\CoreSync\plugins\livetype\r'),
 

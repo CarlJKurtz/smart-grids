@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 class Settings(QWidget):
     def __init__(self, parent):
         super().__init__()
-        self.setWindowTitle(f"Preferences")
+        self.setWindowTitle(f'Preferences')
         self.init_ui()
         self.parent = parent
         self.change_unit()

@@ -131,6 +131,6 @@ def write_xml_content(window):
     grid_child.setAttribute('use_custom_gutter', use_custom_gutter)
     xml.appendChild(grid_child)
 
-    xml_str = root.toprettyxml(indent="\t")
+    xml_str = root.toprettyxml(indent='\t')
 
     return xml_str

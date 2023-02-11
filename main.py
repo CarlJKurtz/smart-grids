@@ -34,7 +34,7 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
         self.dpi = 300
-        self.setWindowTitle(f"{APP_TITLE} | {APP_VERSION}")
+        self.setWindowTitle(f'{APP_TITLE} | {APP_VERSION}')
         self.setGeometry(100, 100, 1000, 400)
         self.main_widget = QWidget()
         self.setCentralWidget(self.main_widget)
@@ -150,7 +150,7 @@ class Window(QMainWindow):
         self.canvas.fill(Qt.black)
         self.canvas_label.setPixmap(self.canvas)
 
-        page_config_group = QGroupBox("Page Configuration")
+        page_config_group = QGroupBox('Page Configuration')
         left_column.addWidget(page_config_group, 2)
         page_config_group_v_layout = QVBoxLayout()
         page_config_group.setLayout(page_config_group_v_layout)
@@ -163,23 +163,23 @@ class Window(QMainWindow):
         page_config.addRow('Preset:', self.preset_dropdown)
 
         self.page_width_spinbox = UnitLineEdit(parent=self, value=PAGE_WIDTH)
-        page_config.addRow("Page width:", self.page_width_spinbox)
+        page_config.addRow('Page width:', self.page_width_spinbox)
 
         self.page_height_spinbox = UnitLineEdit(parent=self, value=PAGE_HEIGHT)
-        page_config.addRow("Page height:", self.page_height_spinbox)
+        page_config.addRow('Page height:', self.page_height_spinbox)
 
         self.top_margin_spinbox = UnitLineEdit(parent=self, value=TOP_MARGIN)
-        page_config.addRow("Top margin:", self.top_margin_spinbox)
+        page_config.addRow('Top margin:', self.top_margin_spinbox)
 
 
         self.bottom_margin_spinbox = UnitLineEdit(parent=self, value=BOTTOM_MARGIN)
-        page_config.addRow("Bottom margin:", self.bottom_margin_spinbox)
+        page_config.addRow('Bottom margin:', self.bottom_margin_spinbox)
 
         self.left_margin_spinbox = UnitLineEdit(parent=self, value=LEFT_MARGIN)
-        page_config.addRow("Left margin:", self.left_margin_spinbox)
+        page_config.addRow('Left margin:', self.left_margin_spinbox)
 
         self.right_margin_spinbox = UnitLineEdit(parent=self, value=RIGHT_MARGIN)
-        page_config.addRow("Right margin:", self.right_margin_spinbox)
+        page_config.addRow('Right margin:', self.right_margin_spinbox)
 
         grid = QGridLayout()
         page_config_group_v_layout.addLayout(grid)
@@ -210,7 +210,7 @@ class Window(QMainWindow):
         grid.addWidget(self.mirror_horizontal_button, 1, 1)
 
 
-        type_config_group = QGroupBox("Type Configuration")
+        type_config_group = QGroupBox('Type Configuration')
         left_column.addWidget(type_config_group, 2)
         type_config_group.setLayout(type_config)
 
@@ -218,102 +218,102 @@ class Window(QMainWindow):
         self.font_dropdown.setMaximumWidth(200)
         self.font_dropdown.addItems(list(self.font_dict.keys()))
         self.font_dropdown.currentTextChanged.connect(self.update)
-        type_config.addRow("Font:", self.font_dropdown)
+        type_config.addRow('Font:', self.font_dropdown)
 
-        self.font_size_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, value=FONT_SIZE)
+        self.font_size_spinbox = QDoubleSpinBox(suffix=' pt', maximum=100000, value=FONT_SIZE)
         self.font_size_spinbox.valueChanged.connect(self.update)
-        type_config.addRow("Font size:", self.font_size_spinbox)
+        type_config.addRow('Font size:', self.font_size_spinbox)
 
-        self.leading_spinbox = QDoubleSpinBox(suffix=" pt", maximum=100000, minimum=0.01, value=LEADING)
+        self.leading_spinbox = QDoubleSpinBox(suffix=' pt', maximum=100000, minimum=0.01, value=LEADING)
         self.leading_spinbox.valueChanged.connect(self.update)
-        type_config.addRow("Leading:", self.leading_spinbox)
+        type_config.addRow('Leading:', self.leading_spinbox)
 
-        grid_config_group = QGroupBox("Grid Configuration")
+        grid_config_group = QGroupBox('Grid Configuration')
         right_column.addWidget(grid_config_group, 2)
         grid_config_group.setLayout(grid_config)
 
         self.rows_spinbox = QSpinBox(minimum=1, maximum=100, value=ROWS)
         self.rows_spinbox.valueChanged.connect(self.update)
-        grid_config.addRow("Amount of rows:", self.rows_spinbox)
+        grid_config.addRow('Amount of rows:', self.rows_spinbox)
 
         self.lines_in_gutter_spinbox = QSpinBox(maximum=100, minimum=1, value=LINES_IN_GUTTER)
         self.lines_in_gutter_spinbox.valueChanged.connect(self.update)
-        grid_config.addRow("Lines in gutter:", self.lines_in_gutter_spinbox)
+        grid_config.addRow('Lines in gutter:', self.lines_in_gutter_spinbox)
 
         self.columns_spinbox = QSpinBox(maximum=100, value=COLUMNS)
         self.columns_spinbox.valueChanged.connect(self.update)
-        grid_config.addRow("Columns:", self.columns_spinbox)
+        grid_config.addRow('Columns:', self.columns_spinbox)
 
         self.use_custom_gutter_checkbox = QCheckBox()
         self.use_custom_gutter_checkbox.stateChanged.connect(self.update)
-        grid_config.addRow("Custom column gutter:", self.use_custom_gutter_checkbox)
+        grid_config.addRow('Custom column gutter:', self.use_custom_gutter_checkbox)
 
         self.custom_gutter_spinbox = UnitLineEdit(parent=self, value=GUTTER)
-        grid_config.addRow("Gutter:", self.custom_gutter_spinbox)
+        grid_config.addRow('Gutter:', self.custom_gutter_spinbox)
 
         self.show_baseline_grid_checkbox = QCheckBox()
         self.show_baseline_grid_checkbox.stateChanged.connect(self.update)
-        grid_config.addRow("Show baseline grid:", self.show_baseline_grid_checkbox)
+        grid_config.addRow('Show baseline grid:', self.show_baseline_grid_checkbox)
 
         self.resolution_output = QLabel(f'{self.dpi} dpi')
-        output_layout.addRow("Document resolution:", self.resolution_output)
+        output_layout.addRow('Document resolution:', self.resolution_output)
 
         self.grid_start_position_value = UnitLabel(parent=self, text=str(round(get_grid_start_position(self), 3)))
-        output_layout.addRow("Grid start position:", self.grid_start_position_value)
+        output_layout.addRow('Grid start position:', self.grid_start_position_value)
 
         self.baseline_shift_value = QLabel(text=f'0 pt')
-        output_layout.addRow("Baseline shift:", self.baseline_shift_value)
+        output_layout.addRow('Baseline shift:', self.baseline_shift_value)
 
         self.possible_lines_value = QLabel(str(get_possible_lines(self)))
-        output_layout.addRow("Total lines:", self.possible_lines_value)
+        output_layout.addRow('Total lines:', self.possible_lines_value)
 
         self.gutter_value = UnitLabel(parent=self, text=str(round(gutter(self), 3)))
-        output_layout.addRow("Row gutter:", self.gutter_value)
+        output_layout.addRow('Row gutter:', self.gutter_value)
 
         self.lines_per_cell_value = QLabel(str(lines_in_cell(self)))
-        output_layout.addRow("Lines per cell:", self.lines_per_cell_value)
+        output_layout.addRow('Lines per cell:', self.lines_per_cell_value)
 
-        self.possible_divisions_value = QLabel("None")
-        output_layout.addRow("Possible divisions:", self.possible_divisions_value)
+        self.possible_divisions_value = QLabel('None')
+        output_layout.addRow('Possible divisions:', self.possible_divisions_value)
 
         self.corrected_bottom_margin_value = UnitLabel(parent=self, text=str(round(corrected_bottom_margin(self), 3)))
-        output_layout.addRow("Corrected bottom margin:", self.corrected_bottom_margin_value)
+        output_layout.addRow('Corrected bottom margin:', self.corrected_bottom_margin_value)
 
         self.text_area_height_value = UnitLabel(parent=self, text=str(round(get_text_area_height(self), 3)))
-        output_layout.addRow("Corrected text area height:", self.text_area_height_value)
+        output_layout.addRow('Corrected text area height:', self.text_area_height_value)
 
         self.ascender_value = UnitLabel(parent=self, text=str(get_ascender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
-        output_layout.addRow("Ascender:", self.ascender_value)
+        output_layout.addRow('Ascender:', self.ascender_value)
 
         self.cap_height_value = UnitLabel(parent=self, text=str(get_cap_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
-        output_layout.addRow("Cap-height:", self.cap_height_value)
+        output_layout.addRow('Cap-height:', self.cap_height_value)
 
         self.x_height_value = UnitLabel(parent=self, text=str(get_x_height(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
-        output_layout.addRow("x-height:", self.x_height_value)
+        output_layout.addRow('x-height:', self.x_height_value)
 
         self.descender_value = UnitLabel(parent=self, text=str(get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value())))
-        output_layout.addRow("Descender:", self.descender_value)
+        output_layout.addRow('Descender:', self.descender_value)
 
-        vertical_alignment_group = QGroupBox("Vertical alignment")
+        vertical_alignment_group = QGroupBox('Vertical alignment')
         left_column.addWidget(vertical_alignment_group, 1)
         vertical_alignment_group.setLayout(vertical_alignment)
-        self.top_alignment_group = QGroupBox("Upper alignment")
+        self.top_alignment_group = QGroupBox('Upper alignment')
         self.top_alignment_group.setLayout(top_alignment_layout)
-        self.bottom_alignment_group = QGroupBox("Bottom alignment")
+        self.bottom_alignment_group = QGroupBox('Bottom alignment')
         self.bottom_alignment_group.setLayout(bottom_alignment_layout)
         vertical_alignment.addWidget(self.top_alignment_group)
         vertical_alignment.addWidget(self.bottom_alignment_group)
 
-        self.ascender_radio = QRadioButton("Ascender")
+        self.ascender_radio = QRadioButton('Ascender')
         self.ascender_radio.toggled.connect(self.update)
-        self.cap_height_radio = QRadioButton("Cap-Height")
+        self.cap_height_radio = QRadioButton('Cap-Height')
         self.cap_height_radio.toggled.connect(self.update)
-        self.xheight_radio = QRadioButton("x-Height")
+        self.xheight_radio = QRadioButton('x-Height')
         self.xheight_radio.toggled.connect(self.update)
 
-        self.baseline_radio = QRadioButton("Baseline")
+        self.baseline_radio = QRadioButton('Baseline')
         self.baseline_radio.toggled.connect(self.update)
-        self.descender_radio = QRadioButton("Descender")
+        self.descender_radio = QRadioButton('Descender')
         self.descender_radio.toggled.connect(self.update)
 
         self.cap_height_radio.setChecked(True)
@@ -325,7 +325,7 @@ class Window(QMainWindow):
         bottom_alignment_layout.addWidget(self.baseline_radio)
         bottom_alignment_layout.addWidget(self.descender_radio)
 
-        output_group = QGroupBox("Output")
+        output_group = QGroupBox('Output')
         right_column.addWidget(output_group, 2)
         output_group.setLayout(output_layout)
 
@@ -449,12 +449,12 @@ class Window(QMainWindow):
 
     def display_possible_divisions(self):
         divisions = str(possible_divisions(self))[1:-1]
-        divisions = divisions.replace(",", ", ")
+        divisions = divisions.replace(',', ', ')
         if len(divisions) > 0:
             self.possible_divisions_value.setText(divisions)
         
         else:
-            self.possible_divisions_value.setText("None")
+            self.possible_divisions_value.setText('None')
 
     def update(self):
         self.bottom_alignment_value = self.update_bottom_alignment_value()
@@ -491,7 +491,7 @@ class Window(QMainWindow):
         self.splash.show()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app.setWindowIcon(QIcon('assets/smart_grids-icon.png'))
