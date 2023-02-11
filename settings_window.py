@@ -54,8 +54,11 @@ class Settings(QWidget):
         main_layout.addWidget(tab, 0, 0, 2, 1)
 
     def reset_indexes(self):
-        os.remove(f'{cur_path}/pickled_fonts.pkl')
-        os.remove(f'{cur_path}/pickled_paths.pkl')
+        try:
+            os.remove(f'{cur_path}/pickled_fonts.pkl')
+            os.remove(f'{cur_path}/pickled_paths.pkl')
+        except FileNotFoundError:
+            pass
 
     def change_unit(self):
         self.parent.change_unit(self.unit_dropdown.currentText())
