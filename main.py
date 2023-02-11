@@ -26,6 +26,7 @@ try:
 except ModuleNotFoundError:
     print(f'{Colors.FAIL}[!]{Colors.ENDC} Module foundation is missing. This can happen in brew environments.')
 
+bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
 
 class Window(QMainWindow):
     resized = pyqtSignal()
@@ -183,19 +184,23 @@ class Window(QMainWindow):
         grid = QGridLayout()
         page_config_group_v_layout.addLayout(grid)
 
-        self.rotate_ccw_button = QPushButton(icon=QIcon('transform_icons/rotate_ccw.svg'))
+        rotate_ccw_icon = QIcon(os.path.abspath(os.path.join(bundle_dir, 'assets/rotate_ccw.svg')))
+        self.rotate_ccw_button = QPushButton(icon=rotate_ccw_icon)
         self.rotate_ccw_button.setFixedWidth(50)
         self.rotate_ccw_button.clicked.connect(self.rotate_ccw)
 
-        self.rotate_cw_button = QPushButton(icon=QIcon('transform_icons/rotate_cw.svg'))
+        rotate_cw_icon = QIcon(os.path.abspath(os.path.join(bundle_dir, 'assets/rotate_cw.svg')))
+        self.rotate_cw_button = QPushButton(icon=rotate_cw_icon)
         self.rotate_cw_button.setFixedWidth(50)
         self.rotate_cw_button.clicked.connect(self.rotate_cw)
 
-        self.mirror_vertical_button = QPushButton(icon=QIcon('transform_icons/mirror_vertical.svg'))
+        mirror_vertical_icon = QIcon(os.path.abspath(os.path.join(bundle_dir, 'assets/mirror_vertical.svg')))
+        self.mirror_vertical_button = QPushButton(icon=mirror_vertical_icon)
         self.mirror_vertical_button.setFixedWidth(50)
         self.mirror_vertical_button.clicked.connect(self.mirror_vertical)
 
-        self.mirror_horizontal_button = QPushButton(icon=QIcon('transform_icons/mirror_horizontal.svg'))
+        mirror_horizontal_icon = QIcon(os.path.abspath(os.path.join(bundle_dir, 'assets/mirror_horizontal.svg')))
+        self.mirror_horizontal_button = QPushButton(icon=mirror_horizontal_icon)
         self.mirror_horizontal_button.setFixedWidth(50)
         self.mirror_horizontal_button.clicked.connect(self.mirror_horizontal)
 
