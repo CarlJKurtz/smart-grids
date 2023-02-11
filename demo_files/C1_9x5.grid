@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<root>
+	<document-preferences version="1.3.0" unit="mm" dpi="300"/>
+	<page page-width="1836.8503925437165" page-height="2599.3700771027593" top-margin="56.6929133501147" bottom-margin="212.59842506293015" left-margin="141.73228337528676" right-margin="56.6929133501147"/>
+	<font key="Palatino" size="9.0" leading="11.5"/>
+	<vertical-alignment upper-alignment="cap-height" lower-alignment="baseline"/>
+	<grid rows="9" gutterlines="4" columns="5" gutter="14.173228337528675" use_custom_gutter="True"/>
+</root>
