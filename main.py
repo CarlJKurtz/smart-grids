@@ -112,8 +112,11 @@ class Window(QMainWindow):
 
     @staticmethod
     def reset_indexes():
-        os.remove(f'{cur_path}/pickled_fonts.pkl')
-        os.remove(f'{cur_path}/pickled_paths.pkl')
+        try:
+            os.remove(f'{cur_path}/pickled_fonts.pkl')
+            os.remove(f'{cur_path}/pickled_paths.pkl')
+        except FileNotFoundError:
+            pass
 
     @staticmethod
     def help_action():
