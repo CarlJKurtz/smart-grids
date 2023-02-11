@@ -183,15 +183,23 @@ class Window(QMainWindow):
         grid = QGridLayout()
         page_config_group_v_layout.addLayout(grid)
 
-        self.rotate_ccw_button = QPushButton('Rotate CCW')
+        self.rotate_ccw_button = QPushButton(icon=QIcon('transform_icons/rotate_ccw.svg'))
+        self.rotate_ccw_button.setFixedWidth(50)
         self.rotate_ccw_button.clicked.connect(self.rotate_ccw)
-        self.rotate_cw_button = QPushButton('Rotate CW')
+
+        self.rotate_cw_button = QPushButton(icon=QIcon('transform_icons/rotate_cw.svg'))
+        self.rotate_cw_button.setFixedWidth(50)
         self.rotate_cw_button.clicked.connect(self.rotate_cw)
-        self.mirror_vertical_button = QPushButton('Mirror Vertical')
+
+        self.mirror_vertical_button = QPushButton(icon=QIcon('transform_icons/mirror_vertical.svg'))
+        self.mirror_vertical_button.setFixedWidth(50)
         self.mirror_vertical_button.clicked.connect(self.mirror_vertical)
-        self.mirror_horizontal_button = QPushButton('Mirror Horizontal')
+
+        self.mirror_horizontal_button = QPushButton(icon=QIcon('transform_icons/mirror_horizontal.svg'))
+        self.mirror_horizontal_button.setFixedWidth(50)
         self.mirror_horizontal_button.clicked.connect(self.mirror_horizontal)
-        grid.addWidget(self.rotate_ccw_button, 0, 0)
+
+        grid.addWidget(self.rotate_ccw_button, 0, 0, alignment=Qt.AlignmentFlag.AlignCenter)
         grid.addWidget(self.rotate_cw_button, 0, 1)
         grid.addWidget(self.mirror_vertical_button, 1, 0)
         grid.addWidget(self.mirror_horizontal_button, 1, 1)
@@ -480,6 +488,7 @@ class Window(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app.setWindowIcon(QIcon('assets/smart_grids-icon.png'))
     window = Window()
     window.show()
