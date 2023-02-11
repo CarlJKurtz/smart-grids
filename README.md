@@ -40,9 +40,6 @@ When setting up a grid with SmartGrids it is helpful to know your Page dimension
 6. **Optional!** Configure and preview the columns. (The default _column gutter_ is equal to the _row gutter_)
 7. Copy the values into InDesign. Set up the baseline grid under ```InDesign - Preferences - Grids``` (Don't forget the grid start.) and create guides under ```Layout - Create Guides``` in InDesign according to the output values. **Important:** SmartGrids will likely increase the bottom margin a bit to fit a whole number of lines so you must adjust your bottom margin in InDesign as well.
 
-### What units should you use?
-SmartGrids does not currently support automatic unit conversion as we know it from our Adobe programs. This means, that all values must be put in as point values. This includes the dimensions and margins of the page. Luckily for us, in Adobe InDesign ```1 pt. == 1 px.```. This means that when you're setting up a grid for a digital setting in Adobe InDesign you can use pixels and points interchangeably. When you're using inches or millimeters you will need to do some conversion.
-
 <a id="Required-packages"></a>
 ## Required packages
 To install the required packages, navigate into the smart-grids directory and execute the following command in the terminal:
