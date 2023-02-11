@@ -11,6 +11,7 @@ from sys import platform
 from unitlineedit import UnitLineEdit
 from unitlabel import UnitLabel
 from settings_window import Settings
+from presets import *
 
 # Adds title to MenuBar on OSX
 try:
@@ -40,6 +41,7 @@ class Window(QMainWindow):
         self.show_splash()
         self.init_menu()
         self.font_dict = create_font_dict()
+        self.preset_dict = list(PRESETS.keys())
         self.bottom_alignment_value = 0
         self.top_alignment_value = 0
         self.init_ui()
@@ -149,7 +151,15 @@ class Window(QMainWindow):
 
         page_config_group = QGroupBox("Page Configuration")
         left_column.addWidget(page_config_group, 2)
-        page_config_group.setLayout(page_config)
+        page_config_group_v_layout = QVBoxLayout()
+        page_config_group.setLayout(page_config_group_v_layout)
+        page_config_group_v_layout.addLayout(page_config)
+
+        self.preset_dropdown = QComboBox()
+        self.preset_dropdown.addItems(self.preset_dict)
+        self.preset_dropdown.setFixedWidth(120)
+        self.preset_dropdown.currentTextChanged.connect(self.load_preset)
+        page_config.addRow('Preset:', self.preset_dropdown)
 
         self.page_width_spinbox = UnitLineEdit(parent=self, value=PAGE_WIDTH)
         page_config.addRow("Page width:", self.page_width_spinbox)
@@ -169,6 +179,23 @@ class Window(QMainWindow):
 
         self.right_margin_spinbox = UnitLineEdit(parent=self, value=RIGHT_MARGIN)
         page_config.addRow("Right margin:", self.right_margin_spinbox)
+
+        grid = QGridLayout()
+        page_config_group_v_layout.addLayout(grid)
+
+        self.rotate_ccw_button = QPushButton('Rotate CCW')
+        self.rotate_ccw_button.clicked.connect(self.rotate_ccw)
+        self.rotate_cw_button = QPushButton('Rotate CW')
+        self.rotate_cw_button.clicked.connect(self.rotate_cw)
+        self.mirror_vertical_button = QPushButton('Mirror Vertical')
+        self.mirror_vertical_button.clicked.connect(self.mirror_vertical)
+        self.mirror_horizontal_button = QPushButton('Mirror Horizontal')
+        self.mirror_horizontal_button.clicked.connect(self.mirror_horizontal)
+        grid.addWidget(self.rotate_ccw_button, 0, 0)
+        grid.addWidget(self.rotate_cw_button, 0, 1)
+        grid.addWidget(self.mirror_vertical_button, 1, 0)
+        grid.addWidget(self.mirror_horizontal_button, 1, 1)
+
 
         type_config_group = QGroupBox("Type Configuration")
         left_column.addWidget(type_config_group, 2)
@@ -221,7 +248,7 @@ class Window(QMainWindow):
         self.grid_start_position_value = UnitLabel(parent=self, text=str(round(get_grid_start_position(self), 3)))
         output_layout.addRow("Grid start position:", self.grid_start_position_value)
 
-        self.baseline_shift_value = UnitLabel(text='0', parent=self)
+        self.baseline_shift_value = QLabel(text=f'0 pt')
         output_layout.addRow("Baseline shift:", self.baseline_shift_value)
 
         self.possible_lines_value = QLabel(str(get_possible_lines(self)))
@@ -291,6 +318,87 @@ class Window(QMainWindow):
 
         self.resized.connect(self.update)
 
+    def rotate_cw(self):
+        page_width = self.page_width_spinbox.text()
+        page_height = self.page_height_spinbox.text()
+        top_margin = self.top_margin_spinbox.text()
+        bottom_margin = self.bottom_margin_spinbox.text()
+        left_margin = self.left_margin_spinbox.text()
+        right_margin = self.right_margin_spinbox.text()
+
+        self.page_width_spinbox.setText(page_height)
+        self.page_width_spinbox.update()
+        self.page_height_spinbox.setText(page_width)
+        self.page_height_spinbox.update()
+
+        self.top_margin_spinbox.setText(left_margin)
+        self.top_margin_spinbox.update()
+        self.right_margin_spinbox.setText(top_margin)
+        self.right_margin_spinbox.update()
+        self.bottom_margin_spinbox.setText(right_margin)
+        self.bottom_margin_spinbox.update()
+        self.left_margin_spinbox.setText(bottom_margin)
+        self.left_margin_spinbox.update()
+
+    def rotate_ccw(self):
+        page_width = self.page_width_spinbox.text()
+        page_height = self.page_height_spinbox.text()
+        top_margin = self.top_margin_spinbox.text()
+        bottom_margin = self.bottom_margin_spinbox.text()
+        left_margin = self.left_margin_spinbox.text()
+        right_margin = self.right_margin_spinbox.text()
+
+        self.page_width_spinbox.setText(page_height)
+        self.page_width_spinbox.update()
+        self.page_height_spinbox.setText(page_width)
+        self.page_height_spinbox.update()
+
+        self.top_margin_spinbox.setText(right_margin)
+        self.top_margin_spinbox.update()
+        self.right_margin_spinbox.setText(bottom_margin)
+        self.right_margin_spinbox.update()
+        self.bottom_margin_spinbox.setText(left_margin)
+        self.bottom_margin_spinbox.update()
+        self.left_margin_spinbox.setText(top_margin)
+        self.left_margin_spinbox.update()
+
+    def mirror_horizontal(self):
+        left_margin = self.left_margin_spinbox.text()
+        right_margin = self.right_margin_spinbox.text()
+
+        self.right_margin_spinbox.setText(left_margin)
+        self.right_margin_spinbox.update()
+        self.left_margin_spinbox.setText(right_margin)
+        self.left_margin_spinbox.update()
+
+    def mirror_vertical(self):
+        top_margin = self.top_margin_spinbox.text()
+        bottom_margin = self.bottom_margin_spinbox.text()
+
+        self.top_margin_spinbox.setText(bottom_margin)
+        self.top_margin_spinbox.update()
+        self.bottom_margin_spinbox.setText(top_margin)
+        self.bottom_margin_spinbox.update()
+
+    def load_preset(self):
+        preset = self.preset_dropdown.currentText()
+        preset_data = PRESETS[preset]
+
+        self.change_unit(preset_data[6])  # Change unit
+
+        self.page_width_spinbox.setText(str(preset_data[0]))
+        self.page_width_spinbox.update()
+        self.page_height_spinbox.setText(str(preset_data[1]))
+        self.page_height_spinbox.update()
+        self.top_margin_spinbox.setText(str(preset_data[2]))
+        self.top_margin_spinbox.update()
+        self.bottom_margin_spinbox.setText(str(preset_data[3]))
+        self.bottom_margin_spinbox.update()
+        self.left_margin_spinbox.setText(str(preset_data[4]))
+        self.left_margin_spinbox.update()
+        self.right_margin_spinbox.setText(str(preset_data[5]))
+        self.right_margin_spinbox.update()
+
     def update_canvas_size(self):
         self.canvas_width = self.canvas_label.frameGeometry().width()
         self.canvas_height = self.canvas_width
@@ -351,7 +459,8 @@ class Window(QMainWindow):
         self.gutter_value.update(round(gutter(self), 5))
         self.lines_per_cell_value.setText(str(lines_in_cell(self)))
         self.descender_value.update(round(font_functions.get_descender(self.font_dict, self.font_dropdown.currentText(), self.font_size_spinbox.value()), 3))
-        self.baseline_shift_value.update(round(self.bottom_alignment_value, 3))
+        baseline_shift = round(self.bottom_alignment_value, 3)
+        self.baseline_shift_value.setText(f'{baseline_shift} pt')
         self.text_area_height_value.update(corrected_text_area_height(self))
 
         self.update_canvas_size()
