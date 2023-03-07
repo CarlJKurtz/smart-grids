@@ -11,10 +11,14 @@ Creating cap-height aligned grids in Adobe InDesign is not impossible, but invol
 
 The grids follow the style proposed by Josef Müller-Brockamann in his influential 1981 book [Grid Systems in Graphic Design](https://books.google.de/books/about/Grid_Systems_in_Graphic_Design_a_Visual.html?id=YOgtwAEACAAJ&redir_esc=y). Typographic grids help you structure your layouts in a meaningful and clean way. When working on larger editorial projects they can speed up your workflow significantly.
 
+![preview image](assets/readme_image-2.png)
+
 ### Important note:
 Because of its type-first approach the application might enlarge the **bottom margin** to fit a whole number of lines into the text area. (After all we can't work with half a line of text, can we?) This means, that you have to input the **corrected bottom margin** suggested by the application into your layout software. This change will never be greater than the **line height**.
 
 ## Installation
+### Note:
+When running __SmartGrids__ for the first time, it might take a couple of minutes to build its font index. After that it will launch much more quickly.
 ### MacOS:
 **Just install it:**
 The easiest way is to download the latest release, which will download a .dmg file which you install just like every other app on your machine.
