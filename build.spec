@@ -4,7 +4,7 @@
 block_cipher = None
 
 added_files = [
-    ('assets/smart_grids-icon.png', 'assets'),
+    ('assets/SmartGrids_Icon.png', 'assets'),
     ('assets/splashscreen.png', 'assets'),
     ('assets/mirror_horizontal.svg', 'assets'),
     ('assets/mirror_vertical.svg', 'assets'),

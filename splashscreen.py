@@ -15,11 +15,12 @@ class SplashScreen(QSplashScreen):
         self.setPixmap(background_image)
         self.setMask(background_image.mask())
 
-        path_to_logo = os.path.abspath(os.path.join(bundle_dir, 'assets/smart_grids-icon.png'))
-        logo = QPixmap(path_to_logo).scaledToWidth(80)
+        path_to_logo = os.path.abspath(os.path.join(bundle_dir, 'assets/SmartGrids_Icon.png'))
+        logo = QPixmap(path_to_logo).scaledToWidth(80*4)
+        logo.setDevicePixelRatio(4.0)
         logo_label = QLabel(self)
         logo_label.setPixmap(logo)
-        logo_label.move(20, 20)
+        logo_label.move(20, 23)
 
         app_name_label = QLabel(APP_TITLE, self)
         app_name_label.setFont(QFont('Default', 42, weight=QFont.Bold))

@@ -28,6 +28,7 @@ except ModuleNotFoundError:
 
 bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
 
+
 class Window(QMainWindow):
     resized = pyqtSignal()
 
@@ -211,7 +212,6 @@ class Window(QMainWindow):
         grid.addWidget(self.rotate_cw_button, 0, 1)
         grid.addWidget(self.mirror_vertical_button, 1, 0)
         grid.addWidget(self.mirror_horizontal_button, 1, 1)
-
 
         type_config_group = QGroupBox('Type Configuration')
         left_column.addWidget(type_config_group, 2)
@@ -497,7 +497,7 @@ class Window(QMainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setAttribute(Qt.AA_UseHighDpiPixmaps)
-    app.setWindowIcon(QIcon('assets/smart_grids-icon.png'))
+    app.setWindowIcon(QIcon('assets/SmartGrids_Icon.png'))
     window = Window()
     window.show()
     window.show_splash()
