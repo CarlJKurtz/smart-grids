@@ -54,9 +54,9 @@ exe = EXE(
 app = BUNDLE(
     exe,
     name='SmartGrids.app',
-    icon='./assets/smart_grids-icon.png',
+    icon='./assets/SmartGrids_Icon.png',
     bundle_identifier=None,
-    version='1.3.0',
+    version='1.3.1',
     info_plist={
         'CFBundleDocumentTypes': [
                 {

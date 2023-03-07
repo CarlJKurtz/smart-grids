@@ -9,7 +9,7 @@ cp -r 'dist/SmartGrids.app' dist/dmg
 test -f 'dist/SmartGrids.dmg' && rm 'dist/SmartGrids.dmg'
 create-dmg \
   --volname 'SmartGrids' \
-  --volicon 'assets/smart_grids-icon.png' \
+  --volicon 'assets/SmartGrids_Icon.png' \
   --window-pos 200 120 \
   --window-size 600 300 \
   --icon-size 100 \
