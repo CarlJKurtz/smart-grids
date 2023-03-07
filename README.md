@@ -49,13 +49,19 @@ When setting up a grid with SmartGrids it is helpful to know your Page dimension
 ## Required packages
 To install the required packages, navigate into the smart-grids directory and execute the following command in the terminal:
 
-```$ cd [path to directory]```
+```bash
+$ cd [path to directory]
+```
 
-```$ pip install -r requirements.txt```
+```bash
+$ pip install -r requirements.txt
+```
 
 This will install all libraries that you need to run SmartGrids. If you want to build the app yourself you need to also install PyInstaller:
 
-```$ pip install pyinstaller```
+```bash
+$ pip install pyinstaller
+```
 
 # About
 ### Support
